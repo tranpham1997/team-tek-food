@@ -34,6 +34,8 @@ class LocationHandler(webapp2.RequestHandler):
         template = env.get_template('glhome.html')
         self.response.write(template.render())
 
+    def post(self):
+        pass
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/search', SearchHandler),
