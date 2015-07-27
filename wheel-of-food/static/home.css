@@ -7,9 +7,12 @@
 }
 header{
   text-align: center;
+  padding-top: 60px;
+  padding-bottom: 10px;
 }
 body{
-
+  margin: 0;
+  background-color: #FFFCFA;
 }
 a{
   text-decoration: none;
@@ -18,4 +21,5 @@ a{
 }
 footer{
   text-align: center;
+  padding-top: 15px;
 }
