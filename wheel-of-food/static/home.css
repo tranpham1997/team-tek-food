@@ -1,0 +1,21 @@
+#locationbox{
+  width: 275px;
+  height: 12px;
+}
+#locationform{
+  text-align: center;
+}
+header{
+  text-align: center;
+}
+body{
+
+}
+a{
+  text-decoration: none;
+  color: #BBBBBB;
+  padding: 0px 10px;
+}
+footer{
+  text-align: center;
+}
