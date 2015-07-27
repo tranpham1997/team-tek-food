@@ -29,7 +29,13 @@ class SearchHandler(webapp2.RequestHandler):
     def get(self):
         pass
 
+class LocationHandler(webapp2.RequestHandler):
+    def get(self):
+        template = env.get_template('glhome.html')
+        self.response.write(template.render())
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/search', SearchHandler)
+    ('/search', SearchHandler),
+    ('/geo', LocationHandler)
 ], debug=True)
