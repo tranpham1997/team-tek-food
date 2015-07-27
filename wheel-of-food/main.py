@@ -15,10 +15,19 @@
 # limitations under the License.
 #
 import webapp2
-
+from google.appengine.api import urlfetch
+import json
+# from googlemaps import geocoding, client
 class MainHandler(webapp2.RequestHandler):
     def get(self):
+        # mapsClient = client.Client(key = 'AIzaSyDIH9iVlHtpMY0BsBd3F3sn43Bmf4YV4mI')
         self.response.write('Hello world!')
+        json_content = urlfetch.fetch('https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=AIzaSyDIH9iVlHtpMY0BsBd3F3sn43Bmf4YV4mI').content
+        results = json.loads(json_content)['results']
+
+        # self.response.write(geocoding.reverse_geocode(mapsClient, (40.714224,-73.961452)))
+        self.response.write(results[0]['formatted_address']
+        )
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
