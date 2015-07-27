@@ -14,19 +14,14 @@ a{
 }
 footer{
   text-align: center;
-  padding-bottom: 10px;
-  vertical-align: text-bottom;
+  padding-top: 15px;
 }
-#locationbox{
-  width: 275px;
-  height: 25px;
-  font-size: 14px;
+h1{
+
 }
-#locationform{
-  text-align: center;
+h2{
+  
 }
-#submitbutton{
-  height: 25px;
-  width: 40px;
-  font-size: 14px;
+#navbar{
+  background-color: #B20000;
 }
