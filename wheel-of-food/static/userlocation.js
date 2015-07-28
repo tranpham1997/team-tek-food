@@ -8,22 +8,23 @@ function getUserLocation(){
 }
 function displayLocation(position){
   //build text string including coordinate data passed in parameter
-  var displayText = "User latitude is " + position.coords.latitude + " longitude is " + position.coords.longitude;
-
+  //var displayText = "User latitude is " + position.coords.latitude + " longitude is " + position.coords.longitude;
   //display the string for demonstration
-  document.getElementById("locationData").innerHTML = displayText;
+  //document.getElementById("locationData").innerHTML = displayText;
+  //redirects to URL indicated below
+  window.location = "../location?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude;
 }
-function returnLatitude(position){
-
-  return position.coords.latitude;
-
-}
-
-function returnLongitude(position){
-
-  return position.coords.latitude;
-  
-}
+// function returnLatitude(position){
+//
+//   return position.coords.latitude;
+//
+// }
+//
+// function returnLongitude(position){
+//
+//   return position.coords.latitude;
+//
+// }
 function displayError(error){
   //get a reference to the HTML element for writing result
   var locationElement = document.getElementById('locationData');

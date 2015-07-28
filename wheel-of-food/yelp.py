@@ -65,3 +65,18 @@ def search(term, location, sort):
         'sort': sort
     }
     return request(api_host, search_path, url_params=url_params)
+
+def geo_search(term, cll, sort):
+#Query the Search API by a search term and location.
+#Args:
+    #term (str): The search term passed to the API.
+    #location (str): The search location passed to the API.
+#Returns:
+    #dict: The JSON response from the request.
+    url_params = {
+        'term': term.replace(' ', '+'),
+        'cll': cll,
+        'limit': search_limit,
+        'sort': sort
+    }
+    return request(api_host, search_path, url_params=url_params)
