@@ -25,10 +25,13 @@ class SearchHandler(webapp2.RequestHandler):
         location = self.request.get('Location')
         # Logic/process info - do a search with Yelp API
         result = yelp.search('restaurants', location, 1)
-        # Print result in proper JSON
+        # Print result in proper JSON - testing purposes
         self.response.headers['Content-Type'] = 'application/json'
         obj = {'result': result}
         self.response.out.write(json.dumps(result))
+        # Process response
+        # self.response.out.write(result["businesses"][0]["name"])
+
 
 class LocationHandler(webapp2.RequestHandler):
     def get(self):
