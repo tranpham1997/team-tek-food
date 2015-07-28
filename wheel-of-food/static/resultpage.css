@@ -44,10 +44,12 @@ h2{
   text-shadow: -1px 1px 1px #B20000;
 }
 h3{
-  color: #FFC131;
-  padding:0 3px;
-  font-family: "Dancing Script", serif;
+  padding: 10px;
+  margin: 0;
+  font-family: Verdana, sans-serif;
   font-size: 28px;
+  color: #C20000;
+  text-shadow: -1px 1px 1px #888888;
 }
 aside{
   background-color: #B20000;
