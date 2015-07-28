@@ -5,7 +5,7 @@ import urllib2
 import oauth2
 
 api_host = 'api.yelp.com'
-search_limit = 3
+search_limit = 10
 search_path = '/v2/search/'
 
 consumer_key = 'AgdTIC8bGyXXBHeH9jr_FQ'
@@ -51,7 +51,7 @@ def request(host, path, url_params=None):
 
     return response
 
-def search(term, location):
+def search(term, location, sort):
 #Query the Search API by a search term and location.
 #Args:
     #term (str): The search term passed to the API.
@@ -61,6 +61,7 @@ def search(term, location):
     url_params = {
         'term': term.replace(' ', '+'),
         'location': location.replace(' ', '+'),
-        'limit': search_limit
+        'limit': search_limit,
+        'sort': sort
     }
     return request(api_host, search_path, url_params=url_params)
