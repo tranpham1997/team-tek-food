@@ -3,9 +3,16 @@ header{
   padding-top: 60px;
   padding-bottom: 10px;
 }
+html{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
 body{
   margin: 0;
-  background-color: #FFFCFA;
+  background-color: #FFFDFD;
+  padding:0;
+  height:100%;
 }
 a{
   text-decoration: none;
@@ -14,13 +21,38 @@ a{
 }
 footer{
   text-align: center;
-  padding-top: 15px;
+  padding-bottom: 10px;
+  vertical-align: baseline;
 }
-h1{
-
+#locationbox{
+  width: 275px;
+  height: 25px;
+  font-size: 14px;
 }
-h2{
-  
+#locationform{
+  text-align: center;
+}
+#submitbutton{
+  height: 25px;
+  width: 50px;
+  font-size: 16px;
+}
+#container {
+   min-height: 100%;
+   position: relative;
+}
+#header {
+   padding: 10px;
+}
+#body {
+   padding: 10px;
+   padding-bottom: 70px;   /* Height of the footer */
+}
+#footer {
+   position: absolute;
+   bottom: 0;
+   width: 100%;
+   height: 60px;   /* Height of the footer */
 }
 #navbar{
   background-color: #B20000;

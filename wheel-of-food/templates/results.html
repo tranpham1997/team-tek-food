@@ -1,47 +1,40 @@
 <!DOCTYPE html>
 <html>
-  <!-- Header of page -->
   <head>
     <link href="../static/resultpage.css" rel="stylesheet">
     <title>Your Results</title>
   </head>
-  <body>
-
-  <!-- Navigation bar to change location -->
-    <a href="/"> <img src="../static/header.jpg" alt="headerpic" width="10%" height="10%"> </a>
-    <nav id="navbar">
-      <a href="/">Home</a>
-    </nav>
-  <!-- Food Choice: the one that was chosen -->
-
-    <h2>Your Location:</h2>
-
-<!-- filters for restaurant results -->
-  <!-- type of restuarant-->
-<h2>Type of Restaurant<h2>
-<select>
-
-  <option value = "Chinese">Afghan</option>
-  <option value = "Indian">African</option>
-  <option value = "Indian"></option>
-  <option value = ""></option>
-  <option value = "Vietnamese">Vietnamese</option>
-
-</select>
-  <!-- price range-->
-
-  <!--Distance range -->
-
-<!-- map from location A to B -->
-
-<!-- description of restaurant -->
-
-<!-- images of food -->
-
-  </body>
-  <footer><br>
-    <a href="/AboutApp"> About Wheel of Food </a>
-    <a href="/AboutUs"> About the Developers </a>
-    <a href="/Sources"> Sources </a>
-  </footer>
+  <div id="container">
+    <div id="header">
+      <header>
+        <a href="/"> <img src="../static/header.jpg" alt="headerpic" width="10%" height="10%"> </a>
+        <nav id="navbar">
+          <a href="/">Home</a>
+        </nav>
+      </header>
+    </div>
+    <div id="body">
+      <body>
+        <aside>
+          <form method="GET" id="filtersform">
+            <h2>
+            <select name="foodType">
+              <option value = "Chinese">Afghan</option>
+              <option value = "Indian">African</option>
+              <option value = "Indian"></option>
+              <option value = ""></option>
+              <option value = "Vietnamese">Vietnamese</option>
+            </select>
+          </form>
+      </aside>
+      </body>
+    </div>
+    <div id="footer">
+      <footer><br>
+        <a href="/AboutApp"> About Wheel of Food </a>
+        <a href="/AboutUs"> About the Developers </a>
+        <a href="/Sources"> Sources </a>
+      </footer>
+    </div>
+  </div>
 </html>
