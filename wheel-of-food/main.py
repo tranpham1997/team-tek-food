@@ -57,11 +57,28 @@ class LatLongHandler(webapp2.RequestHandler):
         'address' : address}
         self.redirect('../search?location=' + address)
 
+class AboutAppHandler(webapp2.RequestHandler):
+    def get(self):
+        template = env.get_template('aboutApp.html')
+        self.response.write(template.render())
+
+class AboutUsHandler(webapp2.RequestHandler):
+    def get(self):
+        template = env.get_template('aboutDevelopers.html')
+        self.response.write(template.render())
+
+class SourcesHandler(webapp2.RequestHandler):
+    def get(self):
+        template = env.get_template('sources.html')
+        self.response.write(template.render())
 
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/search', SearchHandler),
     ('/geo', LocationHandler),
-    ('/location', LatLongHandler)
+    ('/location', LatLongHandler),
+    ('/AboutApp', AboutAppHandler),
+    ('/AboutUs', AboutUsHandler),
+    ('/Sources', SourcesHandler)
 ], debug=True)

@@ -9,21 +9,22 @@
   <div id="container"> <!--all div tags used to move footer to bottom of page -->
     <div id="header">
       <header>
- <!--header picture-->
+        <div id="headSection">
+          <a id="whereTo" href="/">where to</a><a id="eat" href="/">EAT</a><br>
+        </div>
       </header>
     </div>
     <div id="body">
       <body>
-        <h1 id = "title">WHERE TO EAT</h1>
         <form method="POST" id="geolocationform"> <!--form to input location-->
-          <input type = "button" value = "Get Location" onclick ="getUserLocation()"/>
-          <div id ="locationData">
+          <input id="getLocation" type="button" value="Get Location" onclick="getUserLocation()"/>
+          <div id="locationData">
           </div>
         </form>
-        <p><h2 id = "middle"> or </h2></p>
+        <p><h2 id="middle"> or </h2></p>
         <form action="/search" method="get" id="locationform"> <!--form to input location-->
           <input id="locationbox" type="text" name="location" placeholder=" Enter City, State, or ZIP code"/>
-          <input id="submitbutton" type="submit" value="Spin!"/>
+          <input id="submitbutton" type="submit" value="Search!"/>
         </form>
       </body>
     </div>

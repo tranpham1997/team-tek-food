@@ -59,3 +59,9 @@ function displayError(error){
       break;
   }
 }
+
+function initialize(){
+  var mapCanvas = document.getElementById('map-canvas');
+  var map = new google.maps.Map();
+}
+google.maps.event.addDomListener(window, 'load', initialize);
