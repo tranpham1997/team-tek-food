@@ -123,3 +123,8 @@ article{
 #fork{
   padding-left: 10px;
 }
+#map-canvas{
+  width: 400px;
+  height:200px;
+  background-color: #CCC;
+}
