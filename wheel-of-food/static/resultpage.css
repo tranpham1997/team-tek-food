@@ -13,13 +13,13 @@ html{
 }
 body{
   margin: 0;
-  background-color: #FFEFCC;
+  background-color: white;
   padding: 0;
   height:100%;
 }
 a{
   text-decoration: none;
-  color: #BBBBBB;
+  color: #B20000;
   padding: 0px 10px;
 }
 footer{
@@ -32,7 +32,7 @@ h2{
   margin: 0;
   font-family: "Poiret One", sans-serif;
   font-size: 20px;
-  color: #FFEFCC;
+  color: #FFF0DD;
 }
 h3{
   color: #FFC131;
@@ -52,7 +52,7 @@ aside{
   width: 120px;
   height: 20px;
   font-size: 16px;
-  background-color: #FFEFCC;
+  background-color: #FFF0DD;
 }
 #submitbutton{
   height: 25px;
@@ -80,7 +80,7 @@ aside{
 }
 #whereTo{
   font-family: "Poiret One", cursive;
-  color: #FFEFCC;
+  color: #FFF0DD;
   text-align: left;
   margin: 0;
   padding-right: 3px;
