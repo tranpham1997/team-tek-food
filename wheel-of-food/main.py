@@ -35,7 +35,6 @@ class SearchHandler(webapp2.RequestHandler):
 
 class LocationHandler(webapp2.RequestHandler):
     def get(self):
-
         # json_content = urlfetch.fetch('https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=AIzaSyDIH9iVlHtpMY0BsBd3F3sn43Bmf4YV4mI').content
         # results = json.loads(json_content)['results']
         # address = results[0]['formatted address']
@@ -50,6 +49,8 @@ class LatLongHandler(webapp2.RequestHandler):
         lat = self.request.get('lat')
         lon = self.request.get('lon')
         self.response.write(lat + ", " + lon)
+        template = env.get_template('home.html')
+        self.response.write(template.render())
 
 
 app = webapp2.WSGIApplication([

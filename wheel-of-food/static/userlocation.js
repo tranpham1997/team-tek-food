@@ -13,6 +13,21 @@ function displayLocation(position){
   //document.getElementById("locationData").innerHTML = displayText;
   //redirects to URL indicated below
   window.location = "../location?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude;
+  //var displayText = "User latitude is " + position.coords.latitude + " longitude is " + position.coords.longitude;
+  //window.location = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + position.coords.latitude +','+position.coords.longitude + '&key=AIzaSyDIH9iVlHtpMY0BsBd3F3sn43Bmf4YV4mI';
+  //display the string for demonstration
+  //document.getElementById("locationData").innerHTML = displayText;
+}
+function returnLatitude(position){
+
+  return position.coords.latitude;
+
+}
+
+function returnLongitude(position){
+
+  return position.coords.latitude;
+
 }
 // function returnLatitude(position){
 //
