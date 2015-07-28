@@ -24,24 +24,12 @@ class MainHandler(webapp2.RequestHandler):
         location = self.request.get('Location')
         return location
         # Logic/process info - do a search with Yelp API
-        def search(term, location):
-        #Query the Search API by a search term and location.
-        #Args:
-            #term (str): The search term passed to the API.
-            #location (str): The search location passed to the API.
-        #Returns:
-            #dict: The JSON response from the request.
-            term = restaurants
-            url_params = {
-                'term': term.replace(' ', '+'),
-                'location': location.replace(' ', '+'),
-                'limit': search_limit
-            }
-            return yelp.request(api_host, search_path, url_params=url_params)
+        result = yelp.search('restaurants', location)
         # Send a response.
         self.redirect('/search')
 class SearchHandler(webapp2.RequestHandler):
     def get(self):
+<<<<<<< HEAD
         pass
 
 class LocationHandler(webapp2.RequestHandler):
@@ -52,6 +40,9 @@ class LocationHandler(webapp2.RequestHandler):
     def post(self):
         pass
 
+=======
+        self.response.write(result)
+>>>>>>> 27aea70423d34c542a8eb2b8cbc6931898f9a013
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/search', SearchHandler),

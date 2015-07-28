@@ -4,18 +4,26 @@
     <link href="../static/home.css" rel="stylesheet">
     <title>Wheel of Food</title>
   </head>
-  <body>
-    <header>
-      <a href="/"> <img src="../static/header.jpg" alt="Page Header" width="50%" height="50%"> </a>
-    </header>
-    <form method="POST" id="locationform"> <!--form to input location-->
-      <input id="locationbox" type="text" name="Location" placeholder="Enter City, State, or ZIP code"/>
-      <input id="submitbutton" type="submit" value="Spin!"/>
-    </form>
-  </body>
-  <footer><br>
-    <a href="/AboutApp"> About Wheel of Food </a>
-    <a href="/AboutUs"> About the Developers </a>
-    <a href="/Sources"> Sources </a>
-  </footer>
+  <div id="container"> <!--all div tags used to move footer to bottom of page -->
+    <div id="header">
+      <header>
+        <a href="/"> <img src="../static/header.jpg" alt="Page Header" width="50%" height="50%"> </a> <!--header picture-->
+      </header>
+    </div>
+    <div id="body">
+      <body>
+        <form method="POST" id="locationform"> <!--form to input location-->
+          <input id="locationbox" type="text" name="Location" placeholder="Enter City, State, or ZIP code"/>
+          <input id="submitbutton" type="submit" value="Spin!"/>
+        </form>
+      </body>
+    </div>
+    <div id="footer">
+      <footer><br> <!-- Links to other pages -->
+        <a href="/AboutApp"> About Wheel of Food </a>
+        <a href="/AboutUs"> About the Developers </a>
+        <a href="/Sources"> Sources </a>
+      </footer>
+    </div>
+  </div>
 </html>

@@ -49,3 +49,17 @@ def request(host, path, url_params=None):
         conn.close()
 
     return response
+
+def search(term, location):
+#Query the Search API by a search term and location.
+#Args:
+    #term (str): The search term passed to the API.
+    #location (str): The search location passed to the API.
+#Returns:
+    #dict: The JSON response from the request.
+    url_params = {
+        'term': term.replace(' ', '+'),
+        'location': location.replace(' ', '+'),
+        'limit': search_limit
+    }
+    return yelp.request(api_host, search_path, url_params=url_params)
