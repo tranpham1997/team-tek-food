@@ -4,34 +4,56 @@
     <link href="../static/resultpage.css" rel="stylesheet">
     <title>Your Results</title>
   </head>
-  <div id="container">
+  <div id="container"> <!-- all divs used to vertically align footer. DO NOT CHANGE-->
     <div id="header">
       <header>
-        <a href="/"> <img src="../static/header.jpg" alt="headerpic" width="10%" height="10%"> </a>
-        <nav id="navbar">
-          <a href="/">Home</a>
-        </nav>
+        <a id="whereTo" href="/">where to</a><a id="eat" href="/">EAT</a> <!--logo with link to home page-->
       </header>
     </div>
     <div id="body">
       <body>
-        <aside>
-          <form method="GET" id="filtersform">
-            <h2>
-            <select name="foodType">
-              <option value = "Chinese">Afghan</option>
-              <option value = "Indian">African</option>
-              <option value = "Indian"></option>
-              <option value = ""></option>
-              <option value = "Vietnamese">Vietnamese</option>
+        <aside> <!--side bar-->
+          <h1>Filter Your Results</h1>
+          <form method="GET" id="filtersform"> <!--form used to filter results-->
+            <h2>Number of Restaurants Shown</h2>
+            <select class="dropMenu" name="number">
+              <option value="one">1</option>
+              <option value="one">2</option>
+              <option value="one">3</option>
+              <option value="one">4</option>
+              <option value="one">5</option>
             </select>
+            <h2>Type of Restaurant</h2>
+            <select class="dropMenu" name="restaurantType">
+              <option value="Chinese">Chinese</option>
+              <option value="Indonesian">Indonesian</option>
+              <option value="Indian">Indian</option>
+              <option value="Mexican">Mexican</option>
+              <option value="Vietnamese">Vietnamese</option>
+              <option value="Italian">Italian</option>
+            </select><br>
+            <h2>Price Range</h2>
+            <select class="dropMenu" name="priceRange">
+              <option value="cheap">$</option>
+              <option value="medium">$$</option>
+              <option value="expensive">$$$</option>
+              <option value="veryExpensive">$$$$</option>
+            </select><br>
+            <h2>Distance</h2>
+            <select class="dropMenu" name="distance">
+              <option value="close">0-2 miles</option>
+              <option value="medium">3-5 miles</option>
+              <option value="far">6-10 miles</option>
+              <option value="veryFar">11-20 miles<option>
+            </select><br><br>
+            <input id="submitbutton" type="submit" value="Submit">
           </form>
       </aside>
       </body>
     </div>
     <div id="footer">
-      <footer><br>
-        <a href="/AboutApp"> About Wheel of Food </a>
+      <footer><br> <!--Footer with links to other pages-->
+        <a href="/AboutApp"> About Where to Eat </a>
         <a href="/AboutUs"> About the Developers </a>
         <a href="/Sources"> Sources </a>
       </footer>
