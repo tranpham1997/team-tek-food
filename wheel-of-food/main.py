@@ -24,14 +24,16 @@ class SearchHandler(webapp2.RequestHandler):
         result = yelp.search('restaurants', location, 0)
         variables = {
         'name': result["businesses"][0]["name"],
-        'address': result["businesses"][0]["location"]["display_address"]
+        'address': result["businesses"][0]["location"]["display_address"],
+        'type': result["businesses"][0]["categories"][0]
         }
+        template = env.get_template('results.html')
         # Print result in proper JSON - testing purposes
         # self.response.headers['Content-Type'] = 'application/json'
         # obj = {'result': result}
         # self.response.out.write(json.dumps(result))
         # Process response
-        self.response.write(variables)
+        self.response.write(template.render(variables))
 
 class LocationHandler(webapp2.RequestHandler):
     def get(self):
