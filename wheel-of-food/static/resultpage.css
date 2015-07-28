@@ -59,6 +59,12 @@ aside{
   position: absolute;
   right: 5px;
 }
+article{
+  width: 65%;
+  padding: 5px;
+  position: absolute;
+  left: 5px;
+}
 .dropMenu{
   width: 120px;
   height: 20px;
