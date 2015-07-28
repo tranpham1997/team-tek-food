@@ -25,7 +25,7 @@ class SearchHandler(webapp2.RequestHandler):
         variables = {
         'name': result["businesses"][0]["name"],
         'address': result["businesses"][0]["location"]["display_address"],
-        'type': result["businesses"][0]["categories"][0]
+        'type': result["businesses"][0]["categories"][0][0]
         }
         template = env.get_template('results.html')
         # Print result in proper JSON - testing purposes
