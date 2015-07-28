@@ -18,10 +18,6 @@ class MainHandler(webapp2.RequestHandler):
 
 class SearchHandler(webapp2.RequestHandler):
     def get(self):
-        pass
-
-class SearchHandler(webapp2.RequestHandler):
-    def get(self):
         location = self.request.get('location')
         # Logic/process info - do a search with Yelp API
         result = yelp.search('restaurants', location, 1)
@@ -31,7 +27,6 @@ class SearchHandler(webapp2.RequestHandler):
         self.response.out.write(json.dumps(result))
         # Process response
         # self.response.out.write(result["businesses"][0]["name"])
-
 
 class LocationHandler(webapp2.RequestHandler):
     def get(self):
@@ -46,18 +41,17 @@ class LocationHandler(webapp2.RequestHandler):
 
 class LatLongHandler(webapp2.RequestHandler):
     def get(self):
+        template = env.get_template('home.html')
         lat = self.request.get('lat')
         lon = self.request.get('lon')
-        self.response.write(lat + ", " + lon)
-        string = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+ lat + ',' + long + '&key=AIzaSyDIH9iVlHtpMY0BsBd3F3sn43Bmf4YV4mI'
+        string = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+ str(lat) + ',' + str(lon) + '&key=AIzaSyDIH9iVlHtpMY0BsBd3F3sn43Bmf4YV4mI'
         json_content = urlfetch.fetch(string).content
         results = json.loads(json_content)['results']
-        address = results[0]['formatted address']
+        address = results[0]['formatted_address']
         variables = {
-        'address' : address
-         }
-        template = env.get_template('home.html')
-        self.response.write(template.render(variables))
+        'address' : address}
+        self.redirect('../search?location=' + address)
+
 
 
 app = webapp2.WSGIApplication([
