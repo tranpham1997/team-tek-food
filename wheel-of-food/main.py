@@ -49,8 +49,15 @@ class LatLongHandler(webapp2.RequestHandler):
         lat = self.request.get('lat')
         lon = self.request.get('lon')
         self.response.write(lat + ", " + lon)
+        string = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+ lat + ',' + long + '&key=AIzaSyDIH9iVlHtpMY0BsBd3F3sn43Bmf4YV4mI'
+        json_content = urlfetch.fetch(string).content
+        results = json.loads(json_content)['results']
+        address = results[0]['formatted address']
+        variables = {
+        'address' : address
+         }
         template = env.get_template('home.html')
-        self.response.write(template.render())
+        self.response.write(template.render(variables))
 
 
 app = webapp2.WSGIApplication([
