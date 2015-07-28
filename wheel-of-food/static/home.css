@@ -35,6 +35,14 @@ footer{
 #locationform{
   text-align: center;
 }
+#geolocationform{
+  text-align: center;
+}
+#middle{
+  text-align: center;
+  font-family: Verdana, Arial;
+  color: white;
+}
 #submitbutton{
   height: 25px;
   width: 50px;
