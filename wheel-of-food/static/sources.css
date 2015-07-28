@@ -26,13 +26,6 @@ footer{
   padding-bottom: 10px;
   vertical-align: baseline;
 }
-h1{
-  font-family: Verdana, arial, sans-serif;
-  font-size: 40px;
-  padding: 0 12.5%;
-  color: #C20000;
-  text-shadow: -1px 1px 1px #888888;
-}
 #container {
    min-height: 100%;
    position: relative;
