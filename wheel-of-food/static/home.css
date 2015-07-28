@@ -10,13 +10,14 @@ html{
 }
 body{
   margin: 0;
-  background-image: url("Vector_City_Night_Street.png");
+  background-image: url("drinks_retro_inside_desktop_1280x960_hd-wallpaper-110428.jpg");
+  background-size: cover;
   padding:0;
   height:100%;
 }
 a{
   text-decoration: none;
-  color: #BBBBBB;
+  color: white;
   padding: 0px 10px;
 }
 footer{
@@ -28,6 +29,8 @@ footer{
   width: 275px;
   height: 25px;
   font-size: 14px;
+  white-space: nowrap;
+  border-radius: 15px;
 }
 #locationform{
   text-align: center;
@@ -53,4 +56,11 @@ footer{
    bottom: 0;
    width: 100%;
    height: 60px;   /* Height of the footer */
+}
+
+#title{
+  font-family: Verdana, Arial;
+  font-size: 4em;
+  text-align: center;
+  color: white;
 }
