@@ -33,6 +33,7 @@ h2{
   font-family: "Poiret One", sans-serif;
   font-size: 20px;
   color: #FFF0DD;
+  text-shadow: -1px 1px 1px #888888;
 }
 h3{
   color: #FFC131;
