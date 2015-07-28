@@ -1,7 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Poiret+One);
 
 header{
-  text-align: center;
+  text-align: left;
   padding-top: 60px;
   padding-bottom: 10px;
 }
@@ -19,7 +19,7 @@ body{
 }
 a{
   text-decoration: none;
-  color: white;
+  color: #FFF0DD;
   padding: 0px 10px;
 }
 footer{
@@ -32,7 +32,8 @@ footer{
   height: 25px;
   font-size: 14px;
   white-space: nowrap;
-  border-radius: 15px;
+  border-radius: 10px;
+  background-color: #FFF0DD;
 }
 #locationform{
   text-align: center;
@@ -43,19 +44,21 @@ footer{
 #middle{
   text-align: center;
   font-family: Verdana, Arial;
-  color: white;
+  color: #FFF0DD;
 }
 #submitbutton{
   height: 25px;
-  width: 60px;
-  font-size: 16px;
+  width: 64px;
+  font-size: 14px;
+  background-color: #FFF0DD;
+  border-radius: 10px;
 }
 #container {
    min-height: 100%;
    position: relative;
 }
 #header {
-   padding: 10px;
+  padding-top: 100px;
 }
 #body {
    padding: 10px;
@@ -77,7 +80,9 @@ footer{
 #getLocation{
   height: 25px;
   width: 100px;
-  font-size: 16px;
+  font-size: 14px;
+  background-color: #FFF0DD;
+  border-radius: 10px;
 }
 #whereTo{
   font-family: "Poiret One", cursive;
@@ -88,7 +93,7 @@ footer{
   padding-top: 20px;
   padding-bottom: 3px;
   font-size: 60px;
-  text-shadow: -1px 1px 1px #888888;
+  text-shadow: -1px 1px 1px #C3C490;
 }
 #eat{
   font-family: Verdana, sans-serif;
@@ -100,8 +105,13 @@ footer{
   padding-bottom: 3px;
   font-size: 80px;
   font-weight: bold;
-  text-shadow: -1px 1px 1px #888888;
+  text-shadow: -1px 1px 1px #C3C490;
 }
 #fork{
   padding-left: 10px;
+  text-align: left;
+}
+#headSection{
+  width: 416px;
+  margin: auto;
 }
