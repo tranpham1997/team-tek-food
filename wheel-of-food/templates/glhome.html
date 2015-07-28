@@ -1,7 +1,9 @@
 <!DOCTYPE html>
+<!-- home page if geolocation is allowed -->
 <html>
   <head>
-    <link href="../static/home.css" rel="stylesheet">
+    <link href="../static/home.css" rel="stylesheet"/>
+    <script src = "../static/userlocation.js"></script>
     <title>Wheel of Food</title>
   </head>
   <body>
@@ -9,7 +11,7 @@
       <a href="/"> <img src="../static/header.jpg" alt="Page Header" width="50%" height="50%"> </a>
     </header>
     <form method="POST" id="locationform"> <!--form to input location-->
-      <input type = "button" value = "get location" onclick ="getUserLocation()"/>
+      <input type = "button" value = "Get Location" onclick ="getUserLocation()"/>
       <div id ="locationData">
       </div>
     </form>
@@ -18,4 +20,5 @@
     <br><a href="/About"> About the Developers </a>
     <a href="/Sources"> Sources </a>
   </footer>
+</body>
 </html>
