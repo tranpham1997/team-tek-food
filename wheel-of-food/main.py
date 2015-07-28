@@ -19,16 +19,19 @@ class MainHandler(webapp2.RequestHandler):
         self.response.write(results[0]['formatted_address'])
         template = env.get_template('home.html')
         self.response.write(template.render())
-    def post(self):
-        # Get information from request
-        location = self.request.get('Location')
-        return location
-        # Logic/process info - do a search with Yelp API
-        result = yelp.search('restaurants', location)
-        # Send a response.
-        self.redirect('/search')
+    # def post(self):
+    #     # Get information from request
+    #     location = self.request.get('Location')
+    #     # Logic/process info - do a search with Yelp API
+    #     result = yelp.search('restaurants', location)
+    #     self.response.write(result)
+    #     # Send a response.
+    #     self.redirect('/search')
 class SearchHandler(webapp2.RequestHandler):
     def get(self):
+        location = self.request.get('Location')
+        # Logic/process info - do a search with Yelp API
+        result = yelp.search('restaurants', location)
         self.response.write(result)
 app = webapp2.WSGIApplication([
     ('/', MainHandler),

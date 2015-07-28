@@ -1,3 +1,4 @@
+import json
 import sys
 import urllib
 import urllib2
@@ -62,4 +63,4 @@ def search(term, location):
         'location': location.replace(' ', '+'),
         'limit': search_limit
     }
-    return yelp.request(api_host, search_path, url_params=url_params)
+    return request(api_host, search_path, url_params=url_params)
