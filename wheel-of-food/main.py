@@ -26,6 +26,16 @@ class SearchHandler(webapp2.RequestHandler):
     def get(self):
         pass
 
+class SearchHandler(webapp2.RequestHandler):
+    def get(self):
+        location = self.request.get('Location')
+        # Logic/process info - do a search with Yelp API
+        result = yelp.search('restaurants', location, 1)
+        # Print result in proper JSON
+        self.response.headers['Content-Type'] = 'application/json'
+        obj = {'result': result}
+        self.response.out.write(json.dumps(result))
+
 class LocationHandler(webapp2.RequestHandler):
     def get(self):
 
@@ -41,6 +51,7 @@ class LocationHandler(webapp2.RequestHandler):
         def post(self):
                 # Get information from request
             location = self.request.get('Location')
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/search', SearchHandler),
