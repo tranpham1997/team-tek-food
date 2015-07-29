@@ -64,7 +64,7 @@
               <option type = "number" value="10">10</option>
             </select>
             <h2>Type of Restaurant</h2>
-            <select class = "dropMenu" id="typeMenu" name="restaurantType">
+            <select class = "dropMenu" id="typeMenu" name="restaurantType" style ="width: 175px;">
               <option class = "type" value="No Preference">No Preference</option>
               <option class = "type" value="Chinese">Chinese</option>
               <option class = "type" value="Indonesian">Indonesian</option>
@@ -94,9 +94,9 @@
       <article>
         <h3 id = "restaurantName">Restaurant: {{name}}</h3>
         <div id ="map-canvas"></div>
-        <h5 id ="restInfo">Address: {{address[0]}}, {{address[1]}}, {{address[2]}}</h5>
-        <h5 id = "restInfo">Distance: {{distance}} miles</h5>
-        <h5 id = "restInfo">Type: {{type}}</h5>
+        <h4>Address: </h4><div class="restInfo">  {{address[0]}}, {{address[1]}}, {{address[2]}} </div>
+        <h4>Distance: </h4><div class="restInfo"> {{distance}} miles</div>
+        <h4>Type: </h4><div class="restInfo">{{type}}</div>
       </article>
       </body>
     </div>
