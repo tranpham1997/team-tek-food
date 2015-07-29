@@ -78,6 +78,7 @@
             <input id="submitbutton" type="submit" value="Submit">
           </form>
       </aside>
+      <section>
       <article>
         {% for i in range(0,nameRest|length) %}
         <h3 id = "restaurantName">Restaurant: {{nameRest[i]}}</h3>
@@ -87,14 +88,15 @@
         <h5 id = "restInfo">Type: {{typeRest[i]}}</h5>
         {% endfor %}
       </article>
+    </section>
       </body>
     </div>
-    <div id="footer">
-      <footer><br> <!--Footer with links to other pages-->
-        <a href="/AboutApp"> About Where to Eat </a>
-        <a href="/AboutUs"> About the Developers </a>
-        <a href="/Sources"> Sources </a>
-      </footer>
+    <section style = "position: relative">
+    <div id="footer" class = "foot">
+      <p> <!--Footer with links to other pages-->
+        <a class = "foot" href="/AboutApp"> About Where to Eat </a>
+        <a class = "foot" href="/AboutUs"> About the Developers </a>
+        <a class = "foot" href="/Sources"> Sources </a><p>
     </div>
-  </div>
+  </section>
 </html>
