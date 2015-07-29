@@ -47,8 +47,16 @@ h3{
   padding: 10px;
   margin: 0;
   font-family: Verdana, sans-serif;
-  font-size: 28px;
+  font-size: 30px;
   color: #C20000;
+  text-shadow: -1px 1px 1px #888888;
+}
+h4{
+  padding: 10px;
+  margin: 0;
+  font-family: Verdana, sans-serif;
+  font-size: 22px;
+  color: #B20000;
   text-shadow: -1px 1px 1px #888888;
 }
 aside{
@@ -73,6 +81,16 @@ article{
   height: 20px;
   font-size: 16px;
   background-color: #FFF0DD;
+}
+.restInfo{
+  font-family: "Poiret One", cursive;
+  color: #B20000;
+  text-align: left;
+  margin: 0;
+  padding-right: 10px;
+  padding-top: 3px;
+  font-size: 22px;
+  text-shadow: -1px 1px 1px #888888;
 }
 #typeMenu option{
   width: 150px;
