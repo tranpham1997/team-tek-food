@@ -44,7 +44,7 @@
           <h1>Filter Your Results</h1>
           <form action "/results" method="post" id="filtersform"> <!--form used to filter results-->
             <h2>Current Location:</h2>
-              <select type ="text" value ={{location}}></select>
+            <select class="dropMenu" type ="text" value ={{location}}></select>
             <h2>Number of Restaurants Shown</h2>
             <select class="dropMenu" type ="number" name="number">
               <option type = "number" value="1">1</option>
@@ -91,6 +91,7 @@
     </div>
     <div id="footer">
       <footer><br> <!--Footer with links to other pages-->
+        <a href="/"> Home </a>
         <a href="/AboutApp"> About Where to Eat </a>
         <a href="/AboutUs"> About the Developers </a>
         <a href="/Sources"> Sources </a>
