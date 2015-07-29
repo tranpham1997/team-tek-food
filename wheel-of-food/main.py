@@ -21,12 +21,11 @@ class SearchHandler(webapp2.RequestHandler):
     def get(self):
         location = self.request.get('location')
         result = yelp.search('restaurants', location, 0)
-
+        numResults = self.request.get('number')
         distance = int((result["businesses"][0]["distance"] * (.000621371192)) * 100)
-
         miles = (1.0 *distance)/100
-
         variables = {
+        'location': location,
         'distance': miles,
         'name': result["businesses"][0]["name"],
         'address': result["businesses"][0]["location"]["display_address"],
@@ -39,17 +38,32 @@ class SearchHandler(webapp2.RequestHandler):
         # self.response.out.write(json.dumps(result))
         # Process response
         self.response.write(template.render(variables))
-
-class LocationHandler(webapp2.RequestHandler):
-    def get(self):
-        # json_content = urlfetch.fetch('https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=AIzaSyDIH9iVlHtpMY0BsBd3F3sn43Bmf4YV4mI').content
-        # results = json.loads(json_content)['results']
-        # address = results[0]['formatted address']
-        # variables = {
-        # 'address' : address
-        # }
-        template = env.get_template('glhome.html')
-        self.response.write(template.render())
+    def post(self):
+        location = self.request.get('location')
+        result = yelp.search('restaurants', location, 0)
+        distanceRest = []
+        nameRest =[]
+        addressRest = []
+        typeRest =[]
+        numResults = int(self.request.get('number'))
+        for i in range(0,numResults):
+            distance = int((result["businesses"][i]["distance"] * (.000621371192))*100)
+            miles= (1.0 *distance)/100
+            name = result["businesses"][i]["name"]
+            address = result["businesses"][i]["location"]["display_address"]
+            typeR = result["businesses"][i]["categories"][0][0]
+            distanceRest.append(miles)
+            nameRest.append(name)
+            addressRest.append(address)
+            typeRest.append(typeR)
+        variables ={
+            'distanceRest': distanceRest,
+            'nameRest': nameRest,
+            'addressRest': addressRest,
+            'typeRest':typeRest
+        }
+        template = env.get_template('resultsfilter.html')
+        self.response.write(template.render(variables))
 
 class LatLongHandler(webapp2.RequestHandler):
     def get(self):
@@ -79,11 +93,13 @@ class SourcesHandler(webapp2.RequestHandler):
         template = env.get_template('sources.html')
         self.response.write(template.render())
 
+class FilterHandler(webapp2.RequestHandler):
+    def get(self):
+        numResults = self.request.get('number')
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/search', SearchHandler),
-    ('/geo', LocationHandler),
     ('/location', LatLongHandler),
     ('/AboutApp', AboutAppHandler),
     ('/AboutUs', AboutUsHandler),
