@@ -93,7 +93,7 @@ class SearchHandler(webapp2.RequestHandler):
                 address = result["businesses"][j]["location"]["display_address"]
                 typeR = result["businesses"][j]["categories"][0][0]
                 if miles <= disResults:
-                    if typeResults == result["businesses"][j]["categories"][0][0].lower():
+                    if typeResults is result["businesses"][j]["categories"][0][0].lower():
                         distanceRest.append(miles)
                         nameRest.append(name)
                         addressRest.append(address)
