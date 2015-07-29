@@ -18,6 +18,11 @@
         position: userLocation,
         map: map,
         title: 'User location'
+      for ()
+        var marker = new google.maps.Marker({
+          position: myLatlng,
+          map: map,
+          title: 'Restaurant '
       });
     }
     google.maps.event.addDomListener(window, 'load', initialize);
@@ -79,10 +84,10 @@
           </form>
       </aside>
       <section>
+      <div id ="map-canvas"></div>
       <article>
         {% for i in range(0,nameRest|length) %}
         <h3 id = "restaurantName">Restaurant: {{nameRest[i]}}</h3>
-        <div id ="map-canvas"></div>
         <h5 id ="restInfo">Address: {{addressRest[i][0]}}, {{addressRest[i][1]}}, {{addressRest[i][2]}}</h5>
         <h5 id = "restInfo">Distance: {{distanceRest[i]}} miles</h5>
         <h5 id = "restInfo">Type: {{typeRest[i]}}</h5>

@@ -80,6 +80,8 @@ class SearchHandler(webapp2.RequestHandler):
         nameRest =[]
         addressRest = []
         typeRest =[]
+        latRest = []
+        lngRest = []
         numResults = int(self.request.get('number'))
         disResults = int(self.request.get('distance'))
         typeResults = self.request.get('restaurantType')
@@ -94,11 +96,15 @@ class SearchHandler(webapp2.RequestHandler):
                 name = result["businesses"][j]["name"]
                 address = result["businesses"][j]["location"]["display_address"]
                 typeR = result["businesses"][j]["categories"][0][0]
+                lat: results[0]['geometry']['location']['lat']
+                lng: results[0]['geometry']['location']['lng']
                 if miles <= disResults:
                     distanceRest.append(miles)
                     nameRest.append(name)
                     addressRest.append(address)
                     typeRest.append(typeR)
+                    latRest.append(lat)
+                    lngRest.append(lng)
                     i = i + 1
                 j = j + 1
         else:
@@ -111,12 +117,16 @@ class SearchHandler(webapp2.RequestHandler):
                 name = result["businesses"][j]["name"]
                 address = result["businesses"][j]["location"]["display_address"]
                 typeR = result["businesses"][j]["categories"][0][0]
+                lat: results[0]['geometry']['location']['lat']
+                lng: results[0]['geometry']['location']['lng']
                 if miles <= disResults:
                     if typeResults is result["businesses"][j]["categories"][0][0].lower():
                         distanceRest.append(miles)
                         nameRest.append(name)
                         addressRest.append(address)
                         typeRest.append(typeR)
+                        latRest.append(lat)
+                        lngRest.append(lng)
                         i = i + 1
                 j = j + 1
             # for i in range(0,numResults):
@@ -132,17 +142,22 @@ class SearchHandler(webapp2.RequestHandler):
             name = result["businesses"][i]["name"]
             address = result["businesses"][i]["location"]["display_address"]
             typeR = result["businesses"][i]["categories"][0][0]
+            lat: results[0]['geometry']['location']['lat']
+            lng: results[0]['geometry']['location']['lng']
             distanceRest.append(miles)
             nameRest.append(name)
             addressRest.append(address)
             typeRest.append(typeR)
+            latRest.append(lat)
+            lngRest.append(lng)
         variables = {
-            'lat': results[0]['geometry']['location']['lat'],
-            'lng': results[0]['geometry']['location']['lng'],
             'distanceRest': distanceRest,
             'nameRest': nameRest,
             'addressRest': addressRest,
-            'typeRest':typeRest
+            'typeRest': typeRest,
+            'latRest': latRest,
+            'lngRest': lngRest,
+            'location': location
             }
         template = env.get_template('resultsfilter.html')
         self.response.write(template.render(variables))
