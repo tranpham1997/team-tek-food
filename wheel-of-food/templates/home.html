@@ -8,6 +8,11 @@
   <body>
   <div id="container"> <!--all div tags used to move footer to bottom of page -->
     <div id="header">
+      {% if login_url %}
+      <a id="inbutton" href="{{login_url}}">login</a>
+      {% else %}
+      <a id="outbutton" href="{{logout_url}}">logout</a>
+      {% endif %}
       <header>
         <div id="headSection">
           <a id="whereTo" href="/">where to</a><a id="eat" href="/">EAT</a><br>

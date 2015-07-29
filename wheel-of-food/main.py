@@ -6,6 +6,7 @@ from google.appengine.api import urlfetch
 import json
 import yelp
 import random
+from google.appengine.api import users
 # from googlemaps import geocoding, client
 
 env = jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
@@ -14,8 +15,16 @@ class MainHandler(webapp2.RequestHandler):
     def get(self):
         # mapsClient = client.Client(key = 'AIzaSyDIH9iVlHtpMY0BsBd3F3sn43Bmf4YV4mI')
         # self.response.write(geocoding.reverse_geocode(mapsClient, (40.714224,-73.961452)))
+        user = users.get_current_user()
+        if user is None:
+            login_url = users.create_login_url('/')
+            logout_url = None
+        else:
+            logout_url = users.create_logout_url('/')
+            login_url = None
+        template_variables = {'login_url': login_url, 'logout_url': logout_url}
         template = env.get_template('home.html')
-        self.response.write(template.render())
+        self.response.write(template.render(template_variables))
 
 class SearchHandler(webapp2.RequestHandler):
     def get(self):

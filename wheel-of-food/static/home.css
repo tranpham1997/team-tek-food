@@ -115,3 +115,22 @@ footer{
   width: 416px;
   margin: auto;
 }
+#inbutton{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  text-shadow: -1px 1px 1px #C3C490;
+  font-family: "Poiret One", cursive;
+  font-size: 28px;
+  padding-top: 10px;
+  color: #FFF0DD;
+}
+#outbutton{
+  position: absolute;
+  right: 10px;
+  text-shadow: -1px 1px 1px #C3C490;
+  font-family: "Poiret One", cursive;
+  font-size: 28px;
+  padding-top: 10px;
+  color: #FFF0DD;
+}
