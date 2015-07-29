@@ -5,14 +5,27 @@
     <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script src = "../static/userlocation.js"></script>
     <script>
+    var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    var labelIndex = 0;
     function initialize(){
       var mapCanvas = document.getElementById('map-canvas');
+      var userLocation = new google.maps.LatLng({{lat}}, {{lng}})
       var mapOptions = {
-          center: new google.maps.LatLng(44.5403, -78.5463),
-          zoom: 8,
+          center: userLocation,
+          zoom: 13,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         }
       var map = new google.maps.Map(mapCanvas, mapOptions);
+      var userMarker = new google.maps.Marker({
+        position: userLocation,
+        map: map,
+        title: 'User location'
+      });
+      var marker = new google.maps.Marker({
+        position: new google.maps.LatLng({{rest_lat}}, {{rest_lng}}),
+        label: labels[labelIndex++ % labels.length],
+        map: map
+      })
     }
     google.maps.event.addDomListener(window, 'load', initialize);
     </script>

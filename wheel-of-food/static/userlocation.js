@@ -25,17 +25,6 @@ function returnLongitude(position){
   return position.coords.latitude;
 
 }
-// function returnLatitude(position){
-//
-//   return position.coords.latitude;
-//
-// }
-//
-// function returnLongitude(position){
-//
-//   return position.coords.latitude;
-//
-// }
 function displayError(error){
   //get a reference to the HTML element for writing result
   var locationElement = document.getElementById('locationData');

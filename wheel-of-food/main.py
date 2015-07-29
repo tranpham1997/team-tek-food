@@ -20,6 +20,11 @@ class MainHandler(webapp2.RequestHandler):
 class SearchHandler(webapp2.RequestHandler):
     def get(self):
         location = self.request.get('location')
+        gmaps_address = location.replace(' ', '+')
+        geocode = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + str(gmaps_address) + '&key=AIzaSyDIH9iVlHtpMY0BsBd3F3sn43Bmf4YV4mI'
+        json_content = urlfetch.fetch(geocode).content
+        results = json.loads(json_content)['results']
+        # Logic/process info - do a search with Yelp API
         result = yelp.search('restaurants', location, 0)
         numResults = self.request.get('number')
         distance = int((result["businesses"][0]["distance"] * (.000621371192)) * 100)
@@ -27,6 +32,13 @@ class SearchHandler(webapp2.RequestHandler):
         variables = {
         'location': location,
         'distance': miles,
+        'name': result["businesses"][0]["name"],
+        'address': result["businesses"][0]["location"]["display_address"],
+        'type': result["businesses"][0]["categories"][0][0],
+        'lat': results[0]['geometry']['location']['lat'],
+        'lng': results[0]['geometry']['location']['lng'],
+        'rest_lat': result['businesses'][0]['location']['coordinate']['latitude'],
+        'rest_lng': result['businesses'][0]['location']['coordinate']['longitude'],
         'name': result["businesses"][0]["name"],
         'address': result["businesses"][0]["location"]["display_address"],
         'type': result["businesses"][0]["categories"][0][0]
@@ -67,15 +79,14 @@ class SearchHandler(webapp2.RequestHandler):
 
 class LatLongHandler(webapp2.RequestHandler):
     def get(self):
-        template = env.get_template('home.html')
+        # template = env.get_template('home.html')
         lat = self.request.get('lat')
         lon = self.request.get('lon')
         string = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+ str(lat) + ',' + str(lon) + '&key=AIzaSyDIH9iVlHtpMY0BsBd3F3sn43Bmf4YV4mI'
         json_content = urlfetch.fetch(string).content
         results = json.loads(json_content)['results']
-        address = results[0]['formatted_address']
-        variables = {
-        'address' : address}
+        address = results[0]['formatted_address'].replace(' ', '+')
+        # variables = {'address': address}
         self.redirect('../search?location=' + address)
 
 class AboutAppHandler(webapp2.RequestHandler):
