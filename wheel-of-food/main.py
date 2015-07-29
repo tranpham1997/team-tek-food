@@ -58,16 +58,32 @@ class SearchHandler(webapp2.RequestHandler):
         addressRest = []
         typeRest =[]
         numResults = int(self.request.get('number'))
-        for i in range(0,numResults):
-            distance = int((result["businesses"][i]["distance"] * (.000621371192))*100)
+        disResults = int(self.request.get('distance'))
+        i = 0
+        j = 0
+        while i != numResults:
+            distance = int((result["businesses"][j]["distance"] * (.000621371192))*100)
             miles= (1.0 *distance)/100
-            name = result["businesses"][i]["name"]
-            address = result["businesses"][i]["location"]["display_address"]
-            typeR = result["businesses"][i]["categories"][0][0]
-            distanceRest.append(miles)
-            nameRest.append(name)
-            addressRest.append(address)
-            typeRest.append(typeR)
+            name = result["businesses"][j]["name"]
+            address = result["businesses"][j]["location"]["display_address"]
+            typeR = result["businesses"][j]["categories"][0][0]
+            if miles <= disResults:
+                distanceRest.append(miles)
+                nameRest.append(name)
+                addressRest.append(address)
+                typeRest.append(typeR)
+                i = i + 1
+            j = j + 1
+            # for i in range(0,numResults):
+            #     distance = int((result["businesses"][i]["distance"] * (.000621371192))*100)
+            #     miles= (1.0 *distance)/100
+            #     name = result["businesses"][i]["name"]
+            #     address = result["businesses"][i]["location"]["display_address"]
+            #     typeR = result["businesses"][i]["categories"][0][0]
+            #     distanceRest.append(miles)
+            #     nameRest.append(name)
+            #     addressRest.append(address)
+            #     typeRest.append(typeR)
         variables ={
             'distanceRest': distanceRest,
             'nameRest': nameRest,

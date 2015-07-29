@@ -43,8 +43,7 @@
         <aside> <!--side bar-->
           <h1>Filter Your Results</h1>
           <form action "/results" method="post" id="filtersform"> <!--form used to filter results-->
-            <h2>Current Location:</h2>
-            <select class="dropMenu" type ="text" value ={{location}}></select>
+            <h2 value ={{location}} name = "location">Current Location: {{location}}</h2>
             <h2>Number of Restaurants Shown</h2>
             <select class="dropMenu" type ="number" name="number">
               <option type = "number" value="1">1</option>
@@ -52,6 +51,11 @@
               <option type = "number" value="3">3</option>
               <option type = "number" value="4">4</option>
               <option type = "number" value="5">5</option>
+              <option type = "number" value="6">6</option>
+              <option type = "number" value="7">7</option>
+              <option type = "number" value="8">8</option>
+              <option type = "number" value="9">9</option>
+              <option type = "number" value="10">10</option>
             </select>
             <h2>Type of Restaurant</h2>
             <select class="dropMenu" name="restaurantType">
@@ -62,19 +66,19 @@
               <option value="Vietnamese">Vietnamese</option>
               <option value="Italian">Italian</option>
             </select><br>
-            <h2>Price Range</h2>
+            <!--<h2>Price Range</h2>
             <select class="dropMenu" name="priceRange">
               <option value="cheap">$</option>
               <option value="medium">$$</option>
               <option value="expensive">$$$</option>
               <option value="veryExpensive">$$$$</option>
-            </select><br>
+            </select><br>-->
             <h2>Distance</h2>
-            <select class="dropMenu" name="distance">
-              <option value="close">0-2 miles</option>
-              <option value="medium">3-5 miles</option>
-              <option value="far">6-10 miles</option>
-              <option value="veryFar">11-20 miles<option>
+            <select class="dropMenu" name="distance" type = "number">
+              <option value="2">0-2 miles</option>
+              <option value="5">3-5 miles</option>
+              <option value="10">6-10 miles</option>
+              <option value="20">11-20 miles<option>
             </select><br><br>
             <div name ="location" value= {{location}}></div>
             <input id="submitbutton" type="submit" value="Submit">

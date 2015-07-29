@@ -30,8 +30,7 @@
         <aside> <!--side bar-->
           <h1>Filter Your Results</h1>
           <form action "/results" method="post" id="filtersform"> <!--form used to filter results-->
-            <h2>Current Location:</h2>
-              <select type ="text" value ={{location}}></select>
+            <h2 name = "location" value ={{location}}>Current Location:{{location}}</h2>
             <h2>Number of Restaurants Shown</h2>
             <select class="dropMenu" type ="number" name="number">
               <option type = "number" value="1">1</option>
@@ -58,10 +57,10 @@
             </select><br>
             <h2>Distance</h2>
             <select class="dropMenu" name="distance">
-              <option value="close">0-2 miles</option>
-              <option value="medium">3-5 miles</option>
-              <option value="far">6-10 miles</option>
-              <option value="veryFar">11-20 miles<option>
+              <option value="2">0-2 miles</option>
+              <option value="5">3-5 miles</option>
+              <option value="10">6-10 miles</option>
+              <option value="20">11-20 miles<option>
             </select><br><br>
             <div name ="location" value= {{location}}></div>
             <input id="submitbutton" type="submit" value="Submit">

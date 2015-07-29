@@ -5,7 +5,7 @@ import urllib2
 import oauth2
 
 api_host = 'api.yelp.com'
-search_limit = 10
+search_limit = 20
 search_path = '/v2/search/'
 
 consumer_key = 'AgdTIC8bGyXXBHeH9jr_FQ'
