@@ -30,7 +30,9 @@ class SearchHandler(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
         if user is None:
-            pass
+            login_url = None
+            logout_url = None
+            username = None
         else:
             logout_url = users.create_logout_url('/')
             login_url = None
@@ -96,8 +98,8 @@ class SearchHandler(webapp2.RequestHandler):
                 name = result["businesses"][j]["name"]
                 address = result["businesses"][j]["location"]["display_address"]
                 typeR = result["businesses"][j]["categories"][0][0]
-                lat: results[0]['geometry']['location']['lat']
-                lng: results[0]['geometry']['location']['lng']
+                lat = results[0]['geometry']['location']['lat']
+                lng = results[0]['geometry']['location']['lng']
                 if miles <= disResults:
                     distanceRest.append(miles)
                     nameRest.append(name)
@@ -117,8 +119,8 @@ class SearchHandler(webapp2.RequestHandler):
                 name = result["businesses"][j]["name"]
                 address = result["businesses"][j]["location"]["display_address"]
                 typeR = result["businesses"][j]["categories"][0][0]
-                lat: results[0]['geometry']['location']['lat']
-                lng: results[0]['geometry']['location']['lng']
+                lat = results[0]['geometry']['location']['lat']
+                lng = results[0]['geometry']['location']['lng']
                 if miles <= disResults:
                     if typeResults is result["businesses"][j]["categories"][0][0].lower():
                         distanceRest.append(miles)
@@ -142,8 +144,8 @@ class SearchHandler(webapp2.RequestHandler):
             name = result["businesses"][i]["name"]
             address = result["businesses"][i]["location"]["display_address"]
             typeR = result["businesses"][i]["categories"][0][0]
-            lat: results[0]['geometry']['location']['lat']
-            lng: results[0]['geometry']['location']['lng']
+            lat = results[0]['geometry']['location']['lat']
+            lng = results[0]['geometry']['location']['lng']
             distanceRest.append(miles)
             nameRest.append(name)
             addressRest.append(address)
@@ -151,13 +153,18 @@ class SearchHandler(webapp2.RequestHandler):
             latRest.append(lat)
             lngRest.append(lng)
         variables = {
+            'lat': results[0]['geometry']['location']['lat'],
+            'lng': results[0]['geometry']['location']['lng'],
+            'latRest': latRest,
+            'lngRest': lngRest,
             'distanceRest': distanceRest,
             'nameRest': nameRest,
             'addressRest': addressRest,
             'typeRest': typeRest,
             'latRest': latRest,
             'lngRest': lngRest,
-            'location': location
+            'location': location,
+            'numResults': numResults
             }
         template = env.get_template('resultsfilter.html')
         self.response.write(template.render(variables))
