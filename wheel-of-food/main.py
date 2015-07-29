@@ -21,11 +21,16 @@ class SearchHandler(webapp2.RequestHandler):
     def get(self):
         location = self.request.get('location')
         # Logic/process info - do a search with Yelp API
-        result = yelp.search('restaurants', location, 0)
+
+        distance = int((result["businesses"][i]["distance"] * (.000621371192)) * 100)
+
+        miles = (1.0 *distance)/100
+
         variables = {
-        'name': result["businesses"][0]["name"],
-        'address': result["businesses"][0]["location"]["display_address"],
-        'type': result["businesses"][0]["categories"][0][0]
+        'distance': miles,
+        'name': result["businesses"][i]["name"],
+        'address': result["businesses"][i]["location"]["display_address"],
+        'type': result["businesses"][i]["categories"][0][0]
         }
         template = env.get_template('results.html')
         # Print result in proper JSON - testing purposes
