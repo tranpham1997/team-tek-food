@@ -26,6 +26,30 @@ footer{
   padding-bottom: 10px;
   vertical-align: baseline;
 }
+h2{
+  font-family: Verdana, sans-serif;
+  color: black;
+  text-align: left;
+  margin: 0;
+  padding-left: 15%;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  font-size: 40px;
+  font-weight: bold;
+  text-shadow: -1px 1px 1px #888888;
+}
+h3{
+  font-family: "Poiret One", cursive;
+  color: #C20000;
+  text-align: left;
+  margin: 0;
+  padding-right: 3px;
+  padding-top: 20px;
+  padding-bottom: 3px;
+  font-size: 25px;
+  text-shadow: -1px 1px 1px #888888;
+  text-align: center;
+}
 #container {
    min-height: 100%;
    position: relative;
