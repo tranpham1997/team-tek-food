@@ -45,7 +45,7 @@
           <form action "/results" method="post" id="filtersform"> <!--form used to filter results-->
             <h2 value ={{location}} name = "location">Current Location: {{location}}</h2>
             <h2>Number of Restaurants Shown</h2>
-            <select class="dropMenu" type ="number" name="number">
+            <select class = "dropMenu" id="restMenu" type ="number" name="number">
               <option type = "number" value="1">1</option>
               <option type = "number" value="2">2</option>
               <option type = "number" value="3">3</option>
@@ -58,13 +58,14 @@
               <option type = "number" value="10">10</option>
             </select>
             <h2>Type of Restaurant</h2>
-            <select class="dropMenu" name="restaurantType">
-              <option value="Chinese">Chinese</option>
-              <option value="Indonesian">Indonesian</option>
-              <option value="Indian">Indian</option>
-              <option value="Mexican">Mexican</option>
-              <option value="Vietnamese">Vietnamese</option>
-              <option value="Italian">Italian</option>
+            <select classMenu = "dropMenu" id="typeMenu" name="restaurantType">
+              <option class = "type" value="No Preference">No Preference</option>
+              <option class = "type" value="Chinese">Chinese</option>
+              <option class = "type" value="Indonesian">Indonesian</option>
+              <option class = "type" value="Indian">Indian</option>
+              <option class = "type" value="Mexican">Mexican</option>
+              <option class = "type" value="Vietnamese">Vietnamese</option>
+              <option class = "type" value="Italian">Italian</option>
             </select><br>
             <!--<h2>Price Range</h2>
             <select class="dropMenu" name="priceRange">

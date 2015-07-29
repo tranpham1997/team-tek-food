@@ -63,21 +63,43 @@ class SearchHandler(webapp2.RequestHandler):
         typeRest =[]
         numResults = int(self.request.get('number'))
         disResults = int(self.request.get('distance'))
+        typeResults = self.request.get('restaurantType')
         i = 0
         j = 0
-        while i != numResults:
-            distance = int((result["businesses"][j]["distance"] * (.000621371192))*100)
-            miles= (1.0 *distance)/100
-            name = result["businesses"][j]["name"]
-            address = result["businesses"][j]["location"]["display_address"]
-            typeR = result["businesses"][j]["categories"][0][0]
-            if miles <= disResults:
-                distanceRest.append(miles)
-                nameRest.append(name)
-                addressRest.append(address)
-                typeRest.append(typeR)
-                i = i + 1
-            j = j + 1
+        if typeResults == "No Preference":
+            while i != numResults:
+                if j >= (len(result["businesses"])-1):
+                    break;
+                distance = int((result["businesses"][j]["distance"] * (.000621371192))*100)
+                miles= (1.0 *distance)/100
+                name = result["businesses"][j]["name"]
+                address = result["businesses"][j]["location"]["display_address"]
+                typeR = result["businesses"][j]["categories"][0][0]
+                if miles <= disResults:
+                    distanceRest.append(miles)
+                    nameRest.append(name)
+                    addressRest.append(address)
+                    typeRest.append(typeR)
+                    i = i + 1
+                j = j + 1
+        else:
+            typeResults = typeResults.lower()
+            while i != numResults:
+                if j >= (len(result["businesses"])-1):
+                    break;
+                distance = int((result["businesses"][j]["distance"] * (.000621371192))*100)
+                miles= (1.0 *distance)/100
+                name = result["businesses"][j]["name"]
+                address = result["businesses"][j]["location"]["display_address"]
+                typeR = result["businesses"][j]["categories"][0][0]
+                if miles <= disResults:
+                    if typeResults == result["businesses"][j]["categories"][0][0].lower():
+                        distanceRest.append(miles)
+                        nameRest.append(name)
+                        addressRest.append(address)
+                        typeRest.append(typeR)
+                        i = i + 1
+                j = j + 1
             # for i in range(0,numResults):
             #     distance = int((result["businesses"][i]["distance"] * (.000621371192))*100)
             #     miles= (1.0 *distance)/100
