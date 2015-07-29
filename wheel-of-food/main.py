@@ -52,6 +52,10 @@ class SearchHandler(webapp2.RequestHandler):
         self.response.write(template.render(variables))
     def post(self):
         location = self.request.get('location')
+        gmaps_address = location.replace(' ', '+')
+        geocode = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + str(gmaps_address) + '&key=AIzaSyDIH9iVlHtpMY0BsBd3F3sn43Bmf4YV4mI'
+        json_content = urlfetch.fetch(geocode).content
+        results = json.loads(json_content)['results']
         result = yelp.search('restaurants', location, 0)
         distanceRest = []
         nameRest =[]
@@ -84,12 +88,21 @@ class SearchHandler(webapp2.RequestHandler):
             #     nameRest.append(name)
             #     addressRest.append(address)
             #     typeRest.append(typeR)
-        variables ={
+            name = result["businesses"][i]["name"]
+            address = result["businesses"][i]["location"]["display_address"]
+            typeR = result["businesses"][i]["categories"][0][0]
+            distanceRest.append(miles)
+            nameRest.append(name)
+            addressRest.append(address)
+            typeRest.append(typeR)
+        variables = {
+            'lat': results[0]['geometry']['location']['lat'],
+            'lng': results[0]['geometry']['location']['lng'],
             'distanceRest': distanceRest,
             'nameRest': nameRest,
             'addressRest': addressRest,
             'typeRest':typeRest
-        }
+            }
         template = env.get_template('resultsfilter.html')
         self.response.write(template.render(variables))
 
