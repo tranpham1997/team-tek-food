@@ -28,6 +28,13 @@ class MainHandler(webapp2.RequestHandler):
 
 class SearchHandler(webapp2.RequestHandler):
     def get(self):
+        user = users.get_current_user()
+        if user is None:
+            pass
+        else:
+            logout_url = users.create_logout_url('/')
+            login_url = None
+            username = user.email()
         location = self.request.get('location')
         gmaps_address = location.replace(' ', '+')
         geocode = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + str(gmaps_address) + '&key=AIzaSyDIH9iVlHtpMY0BsBd3F3sn43Bmf4YV4mI'
@@ -39,6 +46,9 @@ class SearchHandler(webapp2.RequestHandler):
         distance = int((result["businesses"][0]["distance"] * (.000621371192)) * 100)
         miles = (1.0 *distance)/100
         variables = {
+        'login_url': login_url,
+        'logout_url': logout_url,
+        'username': username,
         'location': location,
         'distance': miles,
         'name': result["businesses"][0]["name"],

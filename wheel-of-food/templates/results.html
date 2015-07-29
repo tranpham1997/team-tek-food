@@ -33,6 +33,12 @@
   </head>
   <div id="container"> <!-- all divs used to vertically align footer. DO NOT CHANGE-->
     <div id="header">
+      {% if login_url %}
+      <a id="inbutton" href="{{login_url}}">login</a>
+      {% else %}
+      <div id="hello"> Hello, {{username}}.
+      <a id="outbutton" href="{{logout_url}}">logout</a></div>
+      {% endif %}
       <header>
         <a id="whereTo" href="/">where to</a><a id="eat" href="/">EAT</a><br>
         <img id="fork" src="../static/header.png" alt="fork" width="159.6667px" heigh="26px"> <!--logo with link to home page-->
