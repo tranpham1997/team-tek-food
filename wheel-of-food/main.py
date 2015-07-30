@@ -7,9 +7,18 @@ import json
 import yelp
 import random
 from google.appengine.api import users
+from google.appengine.ext import ndb
 # from googlemaps import geocoding, client
 
 env = jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
+class UserPreferences(ndb.Model):
+    restType = ndb.StringProperty()
+    numResults = ndb.IntegerProperty()
+    distance = ndb.FloatProperty()
+    date = ndb.DateProperty()
+class User(ndb.Model):
+    name = ndb.StringProperty()
+    userId = ndb.StringProperty()
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -72,6 +81,7 @@ class SearchHandler(webapp2.RequestHandler):
         # Process response
         self.response.write(template.render(variables))
     def post(self):
+        letter =['A','B','C','D','E','F','G','H','I','J']
         location = self.request.get('location')
         gmaps_address = location.replace(' ', '+')
         geocode = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + str(gmaps_address) + '&key=AIzaSyDIH9iVlHtpMY0BsBd3F3sn43Bmf4YV4mI'
@@ -164,6 +174,7 @@ class SearchHandler(webapp2.RequestHandler):
             'latRest': latRest,
             'lngRest': lngRest,
             'location': location,
+            'letter': letter
             }
         template = env.get_template('resultsfilter.html')
         self.response.write(template.render(variables))

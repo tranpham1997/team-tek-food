@@ -91,12 +91,14 @@
             <input id="submitbutton" type="submit" value="Submit">
           </form>
       </aside>
-      <article>
+      <article class = "restResult">
         <h3 id = "restaurantName">Restaurant: {{name}}</h3>
         <div id ="map-canvas"></div>
-        <h6>Address: </h4><div class="restInfo">  {{address[0]}}, {{address[1]}}, {{address[2]}} </div>
-        <h6>Distance: </h4><div class="restInfo"> {{distance}} miles</div>
-        <h6>Type: </h4><div class="restInfo">{{type}}</div>
+        <div>
+        <h5 class="restInfo"><b>Address:</b>  {{address[0]}}, {{address[1]}}, {{address[2]}}</h5>
+        <h5 class="restInfo"><b>Distance:</b> {{distance}} miles</h5>
+        <h5 class="restInfo"><b>Type:</b> {{type}}</h5>
+        </div>
       </article>
       </body>
     </div>

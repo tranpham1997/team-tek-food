@@ -93,6 +93,15 @@ article{
   font-size: 22px;
   text-shadow: -1px 1px 1px #888888;
 }
+.restResult{
+  padding: 10px;
+  margin: 25px;
+  width: 600px;
+  border-style: solid;
+  border-radius: 10px;
+  border-width: 15px;
+  border-color: #F0F0F0;
+}
 #typeMenu option{
   width: 150px;
   height: 20px;
@@ -155,8 +164,8 @@ article{
   padding-left: 10px;
 }
 #map-canvas{
-  width: 400px;
-  height:200px;
+  width: 600px;
+  height:400px;
   background-color: #CCC;
 }
 #inbutton{
