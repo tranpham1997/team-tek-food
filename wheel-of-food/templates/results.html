@@ -33,9 +33,7 @@
   </head>
   <div id="container"> <!-- all divs used to vertically align footer. DO NOT CHANGE-->
     <div id="header">
-      {% if login_url %}
-      <a id="inbutton" href="{{login_url}}">login</a>
-      {% else %}
+      {% if logout_url %}
       <div id="hello"> Hello, {{username}}.
       <a id="profileLink" href="/profile">profile</a><a id="outbutton" href="{{logout_url}}">logout</a></div>
       {% endif %}
@@ -106,6 +104,7 @@
     <section style = "position: relative">
     <div id="footer" class = "foot">
       <p> <!--Footer with links to other pages-->
+        <a class = "foot" href="/"> Home </a>
         <a class = "foot" href="/AboutApp"> About Where to Eat </a>
         <a class = "foot" href="/AboutUs"> About the Developers </a>
         <a class = "foot" href="/Sources"> Sources </a><p>

@@ -43,14 +43,14 @@ class MainHandler(webapp2.RequestHandler):
 class SearchHandler(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
-        if user is None:
-            login_url = None
-            logout_url = None
-            username = None
-        else:
+        if user:
             logout_url = users.create_logout_url('/')
             login_url = None
             username = user.email()
+        else:
+            login_url = None
+            logout_url = None
+            username = None
         location = self.request.get('location')
         gmaps_address = location.replace(' ', '+')
         geocode = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + str(gmaps_address) + '&key=AIzaSyDIH9iVlHtpMY0BsBd3F3sn43Bmf4YV4mI'
@@ -211,11 +211,27 @@ class FilterHandler(webapp2.RequestHandler):
     def get(self):
         numResults = self.request.get('number')
 
+class ProfileHandler(webapp2.RequestHandler):
+    def get(self):
+        template = env.get_template('profile.html')
+        user = users.get_current_user()
+        if user is None:
+            login_url = users.create_login_url('/')
+            logout_url = None
+            username = None
+        else:
+            logout_url = users.create_logout_url('/')
+            login_url = None
+            username = user.email()
+        template_variables = {'login_url': login_url, 'logout_url': logout_url, 'username': username}
+        self.response.write(template.render())
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/search', SearchHandler),
     ('/location', LatLongHandler),
     ('/AboutApp', AboutAppHandler),
     ('/AboutUs', AboutUsHandler),
-    ('/Sources', SourcesHandler)
+    ('/Sources', SourcesHandler),
+    ('/profile', ProfileHandler),
 ], debug=True)
