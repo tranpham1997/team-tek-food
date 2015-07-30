@@ -51,7 +51,7 @@
     <div id="body">
       <body>
         <aside> <!--side bar-->
-          <h1>{{alert}}</h1>
+          <!--<h1>{{alert}}</h1>-->
           <h1>Filter Your Results</h1>
           <form action "/results" method="post" id="filtersform"> <!--form used to filter results-->
             <h2 name = "location" value ={{location}}>Current Location:{{location}}</h2>
@@ -85,25 +85,32 @@
               <option value="expensive">$$$</option>
               <option value="veryExpensive">$$$$</option>
             </select><br>-->
-            <h2>Distance</h2>
-            <select class="dropMenu" name="distance" style ="width: 110px">
-              <option value="2">0-2 miles</option>
-              <option value="5">3-5 miles</option>
-              <option value="10">6-10 miles</option>
-              <option value="20">11-20 miles<option>
-            </select><br><br>
+            {% if distanceRest %}
+              <h2>Distance</h2>
+              <select class="dropMenu" name="distance" style ="width: 110px">
+                <option value="2">0-2 miles</option>
+                <option value="5">3-5 miles</option>
+                <option value="10">6-10 miles</option>
+                <option value="20">11-20 miles<option>
+              </select>
+            {% endif %}
+            <br><br>
             <div name ="location" value= {{location}}></div>
             <input id="submitbutton" type="submit" value="Submit">
           </form>
       </aside>
       <section>
-      <div id ="map-canvas"></div>
+
+      <div class ="restResult" id ="map-canvas"></div>
+        <h3>{{searchResults}}</h3>
         {% for i in range(0,nameRest|length) %}
-        <div class ="restResult">
-        <h3 id = "restaurantName">{{letter[i]}}. {{nameRest[i]}}</h3>
-        <h5 id ="restInfo">Address: {{addressRest[i][0]}}, {{addressRest[i][1]}}, {{addressRest[i][2]}}</h5>
-        <h5 id = "restInfo">Distance: {{distanceRest[i]}} miles</h5>
-        <h5 id = "restInfo">Type: {{typeRest[i]}}</h5>
+          <div class ="restResult">
+          <h3 id = "restaurantName">{{letter[i]}}. {{nameRest[i]}}</h3>
+          <h5 id ="restInfo">Address: {{addressRest[i][0]}}, {{addressRest[i][1]}}, {{addressRest[i][2]}}</h5>
+          {% if distanceRest %}
+            <h5 id = "restInfo">Distance: {{distanceRest[i]}} miles</h5>
+          {% endif %}
+          <h5 id = "restInfo">Type: {{typeRest[i]}}</h5>
       </div>
         {% endfor %}
     </section>
