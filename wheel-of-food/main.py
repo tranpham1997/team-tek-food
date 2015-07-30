@@ -39,7 +39,6 @@ class MainHandler(webapp2.RequestHandler):
         template = env.get_template('home.html')
         self.response.write(template.render(template_variables))
 
-
 class SearchHandler(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
@@ -129,7 +128,7 @@ class SearchHandler(webapp2.RequestHandler):
                 if j >= (len(result["businesses"])-1):
                     break;
         else:
-            alert = "Hi"
+            # alert = "Hi"
             typeResults = typeResults
             while i != numResults:
                 distance = int((result["businesses"][j]["distance"] * (.000621371192))*100)
@@ -153,9 +152,9 @@ class SearchHandler(webapp2.RequestHandler):
                 if j >= (len(result["businesses"])-1):
                     break;
             j = 0
-            resFound = str(i) + " results found for " + typeResults + "food"
+            resFound = str(i) + " results found for " + typeResults + " food"
             if i ==1:
-                resFound = str(i) + " result found for " + typeResults + "food"
+                resFound = str(i) + " result found for " + typeResults + " food"
             while i != numResults:
                 distance = int((result["businesses"][j]["distance"] * (.000621371192))*100)
                 miles= (1.0 *distance)/100
@@ -385,11 +384,6 @@ class FilterHandler(webapp2.RequestHandler):
     def get(self):
         numResults = self.request.get('number')
 
-class User(ndb.Model):
-    food_preference = []
-    usePreferences = ndb.BooleanProperty()
-    numResults = ndb.IntegerProperty()
-
 class ProfileHandler(webapp2.RequestHandler):
     def get(self):
         template = env.get_template('profile.html')
@@ -405,15 +399,14 @@ class ProfileHandler(webapp2.RequestHandler):
         template_variables = {'login_url': login_url, 'logout_url': logout_url, 'username': username}
         self.response.write(template.render(template_variables))
     def post(self):
+        username = self.request.get('username')
         foodTypePreference1 = self.request.get('foodTypePreference1')
         foodTypePreference2 = self.request.get('foodTypePreference2')
         foodTypePreference3 = self.request.get('foodTypePreference3')
         foodTypePreference4 = self.request.get('foodTypePreference4')
         foodTypePreference5 = self.request.get('foodTypePreference5')
         food_preference = User.food_preference.append(foodTypePreference1, foodTypePreference2, foodTypePreference3, foodTypePreference4, foodTypePreference5)
-        usePreferences = bool(self.request.get('usePreferences'))
-        numResults = self.request.get('numResults')
-        newUser = User(food_preference=food_preference, usePreferences=usePreferences, numResults=numResults)
+        newUser = User(username=username, food_preference=food_preference)
         newUser.put()
 
 app = webapp2.WSGIApplication([
