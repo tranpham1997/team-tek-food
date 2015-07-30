@@ -64,7 +64,7 @@ class SearchHandler(webapp2.RequestHandler):
             distance = int((result["businesses"][0]["distance"] * (.000621371192)) * 100)
             miles = (1.0 *distance)/100
         else:
-            miles = None
+            miles = 'Unknown'
 
         # First random restaurant shown in second screen
         variables = {
