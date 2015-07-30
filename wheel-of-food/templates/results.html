@@ -51,7 +51,7 @@
           <form action "/results" method="post" id="filtersform"> <!--form used to filter results-->
             <h2 value ={{location}} name = "location">Current Location: {{location}}</h2>
             <h2>Number of Restaurants Shown</h2>
-            <select class = "dropMenu" id="restMenu" type ="number" name="number">
+            <select class = "dropMenu" type ="number" name="number" style ="width: 50px">
               <option type = "number" value="1">1</option>
               <option type = "number" value="2">2</option>
               <option type = "number" value="3">3</option>
@@ -64,7 +64,7 @@
               <option type = "number" value="10">10</option>
             </select>
             <h2>Type of Restaurant</h2>
-            <select class = "dropMenu" id="typeMenu" name="restaurantType" style ="width: 175px;">
+            <select class = "dropMenu" name="restaurantType" style ="width: 150px;">
               <option class = "type" value="No Preference">No Preference</option>
               <option class = "type" value="Chinese">Chinese</option>
               <option class = "type" value="Indonesian">Indonesian</option>
@@ -81,7 +81,7 @@
               <option value="veryExpensive">$$$$</option>
             </select><br>-->
             <h2>Distance</h2>
-            <select class="dropMenu" name="distance" type = "number">
+            <select class="dropMenu" name="distance" type = "number" style ="width: 110px">
               <option value="2">0-2 miles</option>
               <option value="5">3-5 miles</option>
               <option value="10">6-10 miles</option>
@@ -94,9 +94,9 @@
       <article>
         <h3 id = "restaurantName">Restaurant: {{name}}</h3>
         <div id ="map-canvas"></div>
-        <h4>Address: </h4><div class="restInfo">  {{address[0]}}, {{address[1]}}, {{address[2]}} </div>
-        <h4>Distance: </h4><div class="restInfo"> {{distance}} miles</div>
-        <h4>Type: </h4><div class="restInfo">{{type}}</div>
+        <h6>Address: </h4><div class="restInfo">  {{address[0]}}, {{address[1]}}, {{address[2]}} </div>
+        <h6>Distance: </h4><div class="restInfo"> {{distance}} miles</div>
+        <h6>Type: </h4><div class="restInfo">{{type}}</div>
       </article>
       </body>
     </div>

@@ -35,6 +35,9 @@ footer{
   border-radius: 10px;
   background-color: #FFF0DD;
 }
+#locationbox hover{
+  color: white;
+}
 #locationform{
   text-align: center;
 }
