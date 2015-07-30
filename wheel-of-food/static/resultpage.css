@@ -85,8 +85,9 @@ article{
 .dropMenu{
   width: 140px;
   height: 20px;
-  font-size: 16px;
+  font-size: 15px;
   background-color: #FFF0DD;
+  color: #444444;
 }
 .restInfo{
   font-family: "Poiret One", cursive;
@@ -119,6 +120,7 @@ article{
   font-size: 14px;
   background-color: #FFF0DD;
   border-radius: 10px;
+  color: #444444;
 }
 #container {
    min-height: 100%;
