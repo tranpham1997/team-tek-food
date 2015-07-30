@@ -253,6 +253,11 @@ class FilterHandler(webapp2.RequestHandler):
     def get(self):
         numResults = self.request.get('number')
 
+class User(ndb.Model):
+    food_preference = []
+    usePreferences = ndb.BooleanProperty()
+    numResults = ndb.IntegerProperty()
+
 class ProfileHandler(webapp2.RequestHandler):
     def get(self):
         template = env.get_template('profile.html')
@@ -268,14 +273,15 @@ class ProfileHandler(webapp2.RequestHandler):
         template_variables = {'login_url': login_url, 'logout_url': logout_url, 'username': username}
         self.response.write(template.render(template_variables))
     def post(self):
-        username = self.request.get('username')
         foodTypePreference1 = self.request.get('foodTypePreference1')
         foodTypePreference2 = self.request.get('foodTypePreference2')
         foodTypePreference3 = self.request.get('foodTypePreference3')
         foodTypePreference4 = self.request.get('foodTypePreference4')
         foodTypePreference5 = self.request.get('foodTypePreference5')
         food_preference = User.food_preference.append(foodTypePreference1, foodTypePreference2, foodTypePreference3, foodTypePreference4, foodTypePreference5)
-        newUser = User(username=username, food_preference=food_preference)
+        usePreferences = bool(self.request.get('usePreferences'))
+        numResults = self.request.get('numResults')
+        newUser = User(food_preference=food_preference, usePreferences=usePreferences, numResults=numResults)
         newUser.put()
 
 app = webapp2.WSGIApplication([
