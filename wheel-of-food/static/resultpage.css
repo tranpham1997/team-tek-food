@@ -196,3 +196,13 @@ article{
   padding-top: 10px;
   color: #FFF0DD;
 }
+#profileLink{
+  position: absolute;
+  right: 100px;
+  top: 38px;
+  text-shadow: -1px 1px 1px #C3C490;
+  font-family: "Poiret One", cursive;
+  font-size: 24px;
+  padding-top: 10px;
+  color: #FFF0DD;
+}
