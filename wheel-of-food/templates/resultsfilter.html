@@ -20,9 +20,10 @@
         map: map,
         title: 'User location'
         });
-      var lat = {{latRest|safe}}
-      var lng = {{lngRest|safe}}
-      var latlngBounds = new google.maps.LatLngBounds();
+      var lat = {{latRest|safe}};
+      var lng = {{lngRest|safe}};
+      var markers = [userMarker];
+      var bounds = new google.maps.LatLngBounds();
       for (var i = 0; i < lat.length; i++) {
         var marker = new google.maps.Marker({
           position: new google.maps.LatLng(lat[i], lng[i]),
@@ -30,8 +31,12 @@
           map: map,
           title: 'Restaurant location'
         });
-
+        markers.push(marker);
       };
+      for (var i = 0; i < markers.length; i++) {
+        bounds.extend(markers[i].getPosition());
+      };
+      map.fitBounds(bounds);
     }
     google.maps.event.addDomListener(window, 'load', initialize);
     </script>
@@ -53,7 +58,7 @@
     <div id="body">
       <body>
         <aside> <!--side bar-->
-          <!--<h1>{{alert}}</h1>-->
+          <h1>{{alert}}</h1>
           <h1>Filter Your Results</h1>
           <form action "/results" method="post" id="filtersform"> <!--form used to filter results-->
             <h2 name = "location" value ={{location}}>Current Location:{{location}}</h2>
@@ -120,9 +125,7 @@
           </form>
       </aside>
       <section>
-
-      <div class ="restResult" id ="map-canvas"></div>
-        <h3>{{searchResults}}</h3>
+      <div id ="map-canvas"></div>
         {% for i in range(0,nameRest|length) %}
           <div class ="restResult">
           <h3 id = "restaurantName">{{letter[i]}}. {{nameRest[i]}}</h3>
