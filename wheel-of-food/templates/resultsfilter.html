@@ -20,14 +20,17 @@
         map: map,
         title: 'User location'
         });
-      // var lat = {{latRest|safe}}
-      // var lng = {{lngRest|safe}}
-      // for (var i = 0, i < {{numResults}}; i++) {
+      var lat = {{latRest|safe}}
+      var lng = {{lngRest|safe}}
+      console.log(lat, lng);
+      // for (var i = 0, i < lat.length, i++) {
       //   var marker = new google.maps.Marker({
       //     position: new google.maps.LatLng(lat[i], lng[i]),
       //     label: labels[i % labels.length],
       //     map: map
-      // })
+      //     title: 'Restaurant location'
+      //   });
+      // };
     }
     google.maps.event.addDomListener(window, 'load', initialize);
     </script>
