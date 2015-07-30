@@ -11,15 +11,19 @@ from google.appengine.ext import ndb
 # from googlemaps import geocoding, client
 
 env = jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
+# Information saved in user/email
 class UserPreferences(ndb.Model):
     restType = ndb.StringProperty()
     numResults = ndb.IntegerProperty()
     distance = ndb.FloatProperty()
     date = ndb.DateProperty()
+
+# Saving users in datastore
 class User(ndb.Model):
     name = ndb.StringProperty()
     userId = ndb.StringProperty()
 
+# Initial page for website, offers login information
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         # mapsClient = client.Client(key = 'AIzaSyDIH9iVlHtpMY0BsBd3F3sn43Bmf4YV4mI')
@@ -34,6 +38,7 @@ class MainHandler(webapp2.RequestHandler):
         template_variables = {'login_url': login_url, 'logout_url': logout_url}
         template = env.get_template('home.html')
         self.response.write(template.render(template_variables))
+
 
 class SearchHandler(webapp2.RequestHandler):
     def get(self):
@@ -51,11 +56,14 @@ class SearchHandler(webapp2.RequestHandler):
         geocode = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + str(gmaps_address) + '&key=AIzaSyDIH9iVlHtpMY0BsBd3F3sn43Bmf4YV4mI'
         json_content = urlfetch.fetch(geocode).content
         results = json.loads(json_content)['results']
+
         # Logic/process info - do a search with Yelp API
         result = yelp.search('restaurants', location, 0)
         numResults = self.request.get('number')
         distance = int((result["businesses"][0]["distance"] * (.000621371192)) * 100)
         miles = (1.0 *distance)/100
+
+        # First random restaurant shown in second screen
         variables = {
         'login_url': login_url,
         'logout_url': logout_url,
@@ -74,11 +82,6 @@ class SearchHandler(webapp2.RequestHandler):
         'type': result["businesses"][0]["categories"][0][0]
         }
         template = env.get_template('results.html')
-        # Print result in proper JSON - testing purposes
-        # self.response.headers['Content-Type'] = 'application/json'
-        # obj = {'result': result}
-        # self.response.out.write(json.dumps(result))
-        # Process response
         self.response.write(template.render(variables))
     def post(self):
         letter =['A','B','C','D','E','F','G','H','I','J']
@@ -141,16 +144,6 @@ class SearchHandler(webapp2.RequestHandler):
                         lngRest.append(rest_lng)
                         i = i + 1
                 j = j + 1
-            # for i in range(0,numResults):
-            #     distance = int((result["businesses"][i]["distance"] * (.000621371192))*100)
-            #     miles= (1.0 *distance)/100
-            #     name = result["businesses"][i]["name"]
-            #     address = result["businesses"][i]["location"]["display_address"]
-            #     typeR = result["businesses"][i]["categories"][0][0]
-            #     distanceRest.append(miles)
-            #     nameRest.append(name)
-            #     addressRest.append(address)
-            #     typeRest.append(typeR)
             name = result["businesses"][i]["name"]
             address = result["businesses"][i]["location"]["display_address"]
             typeR = result["businesses"][i]["categories"][0][0]
