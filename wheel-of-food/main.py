@@ -46,7 +46,7 @@ class SearchHandler(webapp2.RequestHandler):
         if user:
             logout_url = users.create_logout_url('/')
             login_url = None
-            username = user.email()
+            username = user.nickname()
         else:
             login_url = None
             logout_url = None
@@ -103,7 +103,8 @@ class SearchHandler(webapp2.RequestHandler):
         latRest = []
         lngRest = []
         numResults = int(self.request.get('number'))
-        disResults = int(self.request.get('distance'))
+        if hasattr(result["businesses"][0], "distance"):
+            disResults = int(self.request.get('distance'))
         typeResults = self.request.get('restaurantType')
         i = 0
         j = 0
@@ -113,15 +114,24 @@ class SearchHandler(webapp2.RequestHandler):
             while i != numResults:
                 if j >= (len(result["businesses"])-1):
                     break;
-                distance = int((result["businesses"][j]["distance"] * (.000621371192))*100)
-                miles= (1.0 *distance)/100
+                if hasattr(result["businesses"][0], "distance"):
+                    distance = int((result["businesses"][j]["distance"] * (.000621371192))*100)
+                    miles= (1.0 *distance)/100
                 name = result["businesses"][j]["name"]
                 address = result["businesses"][j]["location"]["display_address"]
                 typeR = result["businesses"][j]["categories"][0][0]
                 rest_lat = result['businesses'][j]['location']['coordinate']['latitude']
                 rest_lng = result['businesses'][j]['location']['coordinate']['longitude']
-                if miles <= disResults:
-                    distanceRest.append(miles)
+                if hasattr(result["businesses"][0], "distance"):
+                    if miles <= disResults:
+                        distanceRest.append(miles)
+                        nameRest.append(name)
+                        addressRest.append(address)
+                        typeRest.append(typeR)
+                        latRest.append(rest_lat)
+                        lngRest.append(rest_lng)
+                        i = i + 1
+                else:
                     nameRest.append(name)
                     addressRest.append(address)
                     typeRest.append(typeR)
@@ -138,15 +148,31 @@ class SearchHandler(webapp2.RequestHandler):
                 distance = int((result["businesses"][j]["distance"] * (.000621371192))*100)
                 miles= (1.0 *distance)/100
                 #miles = "Unknown"
-
+                if j >= (len(result["businesses"])-1):
+                    break;
+                if hasattr(result["businesses"][0], "distance"):
+                    distance = int((result["businesses"][j]["distance"] * (.000621371192))*100)
+                    miles= (1.0 *distance)/100
                 name = result["businesses"][j]["name"]
                 address = result["businesses"][j]["location"]["display_address"]
                 typeR = result["businesses"][j]["categories"][0][0]
                 rest_lat = result['businesses'][j]['location']['coordinate']['latitude']
                 rest_lng = result['businesses'][j]['location']['coordinate']['longitude']
-                if miles <= disResults or miles is "Unknown":
-                    if typeResults == result["businesses"][j]["categories"][0][0]:
-                        distanceRest.append(miles)
+                # if miles <= disResults or miles is "Unknown":
+                #     if typeResults == result["businesses"][j]["categories"][0][0]:
+                #         distanceRest.append(miles)
+                if hasattr(result["businesses"][0], "distance"):
+                    if miles <= disResults:
+                        if typeResults is result["businesses"][j]["categories"][0][0].lower():
+                            distanceRest.append(miles)
+                            nameRest.append(name)
+                            addressRest.append(address)
+                            typeRest.append(typeR)
+                            latRest.append(rest_lat)
+                            lngRest.append(rest_lng)
+                            i = i + 1
+                else:
+                    if typeResults is result["businesses"][j]["categories"][0][0].lower():
                         nameRest.append(name)
                         addressRest.append(address)
                         typeRest.append(typeR)
@@ -238,7 +264,7 @@ class ProfileHandler(webapp2.RequestHandler):
         else:
             logout_url = users.create_logout_url('/')
             login_url = None
-            username = user.email()
+            username = user.nickname()
         template_variables = {'login_url': login_url, 'logout_url': logout_url, 'username': username}
         self.response.write(template.render())
 

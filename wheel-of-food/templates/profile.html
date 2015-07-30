@@ -6,10 +6,9 @@
   </head>
   <div id="container"> <!-- all divs used to vertically align footer. DO NOT CHANGE-->
     <div id="header">
-      {% if login_url %}
-      <a id="inbutton" href="{{login_url}}">login</a>
-      {% else %}
-      <a id="outbutton" href="{{logout_url}}">logout</a>
+      {% if logout_url %}
+      <div id="hello"> Hello, {{username}}.
+      <a id="profileLink" href="/profile">profile</a><a id="outbutton" href="{{logout_url}}">logout</a></div>
       {% endif %}
       <header>
         <a id="whereTo" href="/">where to</a><a id="eat" href="/">EAT</a><br>
