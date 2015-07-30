@@ -28,6 +28,7 @@ class MainHandler(webapp2.RequestHandler):
     def get(self):
         # mapsClient = client.Client(key = 'AIzaSyDIH9iVlHtpMY0BsBd3F3sn43Bmf4YV4mI')
         # self.response.write(geocoding.reverse_geocode(mapsClient, (40.714224,-73.961452)))
+        error = self.request.get('error')
         user = users.get_current_user()
         if user is None:
             login_url = users.create_login_url('/')
@@ -35,7 +36,7 @@ class MainHandler(webapp2.RequestHandler):
         else:
             logout_url = users.create_logout_url('/')
             login_url = None
-        template_variables = {'login_url': login_url, 'logout_url': logout_url}
+        template_variables = {'login_url': login_url, 'logout_url': logout_url, 'error': error}
         template = env.get_template('home.html')
         self.response.write(template.render(template_variables))
 
@@ -57,10 +58,14 @@ class SearchHandler(webapp2.RequestHandler):
         results = json.loads(json_content)['results']
 
         # Logic/process info - do a search with Yelp API
+        miles = ''
         result = yelp.search('restaurants', location, 0)
         numResults = self.request.get('number')
-        distance = int((result["businesses"][0]["distance"] * (.000621371192)) * 100)
-        miles = (1.0 *distance)/100
+        if 'distance' not in result["businesses"][0]:
+            self.redirect('/?error=true')
+        else:
+            distance = int((result["businesses"][0]["distance"] * (.000621371192)) * 100)
+            miles = (1.0 *distance)/100
 
         # First random restaurant shown in second screen
         variables = {

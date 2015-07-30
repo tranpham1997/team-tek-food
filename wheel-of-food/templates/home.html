@@ -31,6 +31,11 @@
           <input id="locationbox" type="text" name="location" placeholder=" Enter full address"/>
           <input id="submitbutton" type="submit" value="Search!"/>
         </form>
+        <div id="error">
+        {% if error == "true" %}
+        <p>Please enter a full address.</p>
+        </div>
+        {% endif %}
       </body>
     </div>
     <div id="footer">
