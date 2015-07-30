@@ -83,11 +83,11 @@ class SearchHandler(webapp2.RequestHandler):
         }
         template = env.get_template('results.html')
         # Print result in proper JSON - debugging purposes
-        # self.response.headers['Content-Type'] = 'application/json'
-        # obj = {'result': result}
-        # self.response.out.write(json.dumps(result))
+        self.response.headers['Content-Type'] = 'application/json'
+        obj = {'result': result}
+        self.response.out.write(json.dumps(result))
         # Send a response.
-        self.response.write(template.render(variables))
+        #self.response.write(template.render(variables))
     def post(self):
         letter = ['A','B','C','D','E','F','G','H','I','J']
         location = self.request.get('location')
