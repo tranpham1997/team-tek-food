@@ -60,8 +60,11 @@ class SearchHandler(webapp2.RequestHandler):
         # Logic/process info - do a search with Yelp API
         result = yelp.search('restaurants', location, 0)
         numResults = self.request.get('number')
-        distance = int((result["businesses"][0]["distance"] * (.000621371192)) * 100)
-        miles = (1.0 *distance)/100
+        if hasattr(result["businesses"][0], "distance"):
+            distance = int((result["businesses"][0]["distance"] * (.000621371192)) * 100)
+            miles = (1.0 *distance)/100
+        else:
+            miles = None
 
         # First random restaurant shown in second screen
         variables = {
@@ -77,11 +80,13 @@ class SearchHandler(webapp2.RequestHandler):
         'lng': results[0]['geometry']['location']['lng'],
         'rest_lat': result['businesses'][0]['location']['coordinate']['latitude'],
         'rest_lng': result['businesses'][0]['location']['coordinate']['longitude'],
-        'name': result["businesses"][0]["name"],
-        'address': result["businesses"][0]["location"]["display_address"],
-        'type': result["businesses"][0]["categories"][0][0],
         }
         template = env.get_template('results.html')
+        # Print result in proper JSON - debugging purposes
+        # self.response.headers['Content-Type'] = 'application/json'
+        # obj = {'result': result}
+        # self.response.out.write(json.dumps(result))
+        # Send a response.
         self.response.write(template.render(variables))
     def post(self):
         letter = ['A','B','C','D','E','F','G','H','I','J']
