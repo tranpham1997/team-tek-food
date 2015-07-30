@@ -215,16 +215,26 @@ class ProfileHandler(webapp2.RequestHandler):
     def get(self):
         template = env.get_template('profile.html')
         user = users.get_current_user()
-        if user is None:
-            login_url = users.create_login_url('/')
-            logout_url = None
-            username = None
-        else:
+        if user:
             logout_url = users.create_logout_url('/')
             login_url = None
             username = user.nickname()
+        else:
+            login_url = None
+            logout_url = None
+            username = None
         template_variables = {'login_url': login_url, 'logout_url': logout_url, 'username': username}
-        self.response.write(template.render())
+        self.response.write(template.render(template_variables))
+    def post(self):
+        username = self.request.get('username')
+        foodTypePreference1 = self.request.get('foodTypePreference1')
+        foodTypePreference2 = self.request.get('foodTypePreference2')
+        foodTypePreference3 = self.request.get('foodTypePreference3')
+        foodTypePreference4 = self.request.get('foodTypePreference4')
+        foodTypePreference5 = self.request.get('foodTypePreference5')
+        food_preference = User.food_preference.append(foodTypePreference1, foodTypePreference2, foodTypePreference3, foodTypePreference4, foodTypePreference5)
+        newUser = User(username=username, food_preference=food_preference)
+        newUser.put()
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),

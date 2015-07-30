@@ -34,6 +34,27 @@ h1{
   color: #C20000;
   text-shadow: -1px 1px 1px #888888;
 }
+h2{
+  font-family: Verdana, arial, sans-serif;
+  font-size: 30px;
+  padding: 0 12.5%;
+  color: #C20000;
+  text-shadow: -1px 1px 1px #888888;
+}
+p{
+  font-family: "Poiret One", arial, sans-serif;
+  font-size: 22px;
+  padding: 0 12.5%;
+  margin: 0;
+  color: #B20000;
+  text-shadow: -1px 1px 1px #888888;
+}
+.dropMenu{
+  width: 140px;
+  height: 20px;
+  font-size: 16px;
+  background-color: #FFF0DD;
+}
 #container {
    min-height: 100%;
    position: relative;
@@ -80,6 +101,15 @@ h1{
 #fork{
   padding-left: 10px;
 }
+#hello{
+  position: absolute;
+  right: 10px;
+  text-shadow: -1px 1px 1px #C3C490;
+  font-family: "Poiret One", cursive;
+  font-size: 24px;
+  padding-top: 10px;
+  color: #FFF0DD;
+}
 #inbutton{
   position: absolute;
   right: 10px;
@@ -93,12 +123,19 @@ h1{
 #outbutton{
   position: absolute;
   right: 10px;
-  top: 10px;
+  top: 38px;
   text-shadow: -1px 1px 1px #C3C490;
   font-family: "Poiret One", cursive;
   font-size: 24px;
   padding-top: 10px;
   color: #FFF0DD;
+}
+#submitbutton{
+  height: 25px;
+  width: 70px;
+  font-size: 14px;
+  background-color: #FFF0DD;
+  border-radius: 10px;
 }
 #profileLink{
   position: absolute;

@@ -8,7 +8,7 @@
     <div id="header">
       {% if logout_url %}
       <div id="hello"> Hello, {{username}}.
-      <a id="profileLink" href="/profile">profile</a><a id="outbutton" href="{{logout_url}}">logout</a></div>
+      <a id="outbutton" href="{{logout_url}}">logout</a></div>
       {% endif %}
       <header>
         <a id="whereTo" href="/">where to</a><a id="eat" href="/">EAT</a><br>
@@ -17,7 +17,32 @@
     </div>
     <div id="body">
       <body>
+        <h2>Your Profile</h2>
+        <p>Enter your top five food preferences:</p><br>
+        <form method="POST">
+            <p>
+                 1. <select class="dropMenu" name="foodTypePreference1">
 
+                </select><br><br>
+                2. <select class="dropMenu" name="foodTypePreference2">
+
+                </select><br><br>
+                3. <select class="dropMenu" name="foodTypePreference3">
+
+                </select><br><br>
+                4. <select class="dropMenu" name="foodTypePreference4">
+
+                </select><br><br>
+                5. <select class="dropMenu" name="foodTypePreference5">
+
+                </select><br><br>
+                Automatically Use Your Preferences When Logged In?<br>
+                <input type="radio" name="usePreferences" value="True" checked>Yes
+                <br>
+                <input type="radio" name="usePreferences" value="False">No<br><br>
+                <input id="submitbutton" type="submit" value"Save">
+            </p>
+        </form>
       </body>
     </div>
     <div id="footer">
