@@ -79,7 +79,7 @@ class SearchHandler(webapp2.RequestHandler):
         'rest_lng': result['businesses'][0]['location']['coordinate']['longitude'],
         'name': result["businesses"][0]["name"],
         'address': result["businesses"][0]["location"]["display_address"],
-        'type': result["businesses"][0]["categories"][0][0]
+        'type': result["businesses"][0]["categories"][0][0],
         }
         template = env.get_template('results.html')
         self.response.write(template.render(variables))
@@ -102,6 +102,7 @@ class SearchHandler(webapp2.RequestHandler):
         typeResults = self.request.get('restaurantType')
         i = 0
         j = 0
+        alert = ""
         if typeResults == "No Preference":
             while i != numResults:
                 if j >= (len(result["businesses"])-1):
@@ -123,6 +124,7 @@ class SearchHandler(webapp2.RequestHandler):
                     i = i + 1
                 j = j + 1
         else:
+            alert = "Hi"
             typeResults = typeResults.lower()
             while i != numResults:
                 if j >= (len(result["businesses"])-1):
@@ -167,7 +169,8 @@ class SearchHandler(webapp2.RequestHandler):
             'latRest': latRest,
             'lngRest': lngRest,
             'location': location,
-            'letter': letter
+            'letter': letter,
+            'alert': alert
             }
         template = env.get_template('resultsfilter.html')
         self.response.write(template.render(variables))
