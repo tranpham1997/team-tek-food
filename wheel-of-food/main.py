@@ -84,7 +84,7 @@ class SearchHandler(webapp2.RequestHandler):
         template = env.get_template('results.html')
         self.response.write(template.render(variables))
     def post(self):
-        letter =['A','B','C','D','E','F','G','H','I','J']
+        letter = ['A','B','C','D','E','F','G','H','I','J']
         location = self.request.get('location')
         gmaps_address = location.replace(' ', '+')
         geocode = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + str(gmaps_address) + '&key=AIzaSyDIH9iVlHtpMY0BsBd3F3sn43Bmf4YV4mI'
