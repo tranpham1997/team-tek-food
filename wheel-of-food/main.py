@@ -46,7 +46,7 @@ class SearchHandler(webapp2.RequestHandler):
         if user:
             logout_url = users.create_logout_url('/')
             login_url = None
-            username = user.email()
+            username = user.nickname()
         else:
             login_url = None
             logout_url = None
@@ -222,7 +222,7 @@ class ProfileHandler(webapp2.RequestHandler):
         else:
             logout_url = users.create_logout_url('/')
             login_url = None
-            username = user.email()
+            username = user.nickname()
         template_variables = {'login_url': login_url, 'logout_url': logout_url, 'username': username}
         self.response.write(template.render())
 
