@@ -78,6 +78,7 @@ class SearchHandler(webapp2.RequestHandler):
         'type': result["businesses"][0]["categories"][0][0],
         'lat': results[0]['geometry']['location']['lat'],
         'lng': results[0]['geometry']['location']['lng'],
+        'restImages': results["businesses"][0]['image_url'][0],
         'rest_lat': result['businesses'][0]['location']['coordinate']['latitude'],
         'rest_lng': result['businesses'][0]['location']['coordinate']['longitude'],
         }
