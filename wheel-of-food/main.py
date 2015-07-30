@@ -60,7 +60,7 @@ class SearchHandler(webapp2.RequestHandler):
         # Logic/process info - do a search with Yelp API
         result = yelp.search('restaurants', location, 0)
         numResults = self.request.get('number')
-        if hasattr(result["businesses"][0], "distance"):
+        if "distance" in result["businesses"][0]:
             distance = int((result["businesses"][0]["distance"] * (.000621371192)) * 100)
             miles = (1.0 *distance)/100
         else:
@@ -103,7 +103,7 @@ class SearchHandler(webapp2.RequestHandler):
         latRest = []
         lngRest = []
         numResults = int(self.request.get('number'))
-        if hasattr(result["businesses"][0], "distance"):
+        if "distance" in result["businesses"][0]:
             disResults = int(self.request.get('distance'))
         typeResults = self.request.get('restaurantType')
         i = 0
@@ -114,7 +114,7 @@ class SearchHandler(webapp2.RequestHandler):
             while i != numResults:
                 if j >= (len(result["businesses"])-1):
                     break;
-                if hasattr(result["businesses"][0], "distance"):
+                if "distance" in result["businesses"][0]:
                     distance = int((result["businesses"][j]["distance"] * (.000621371192))*100)
                     miles= (1.0 *distance)/100
                 name = result["businesses"][j]["name"]
@@ -122,7 +122,7 @@ class SearchHandler(webapp2.RequestHandler):
                 typeR = result["businesses"][j]["categories"][0][0]
                 rest_lat = result['businesses'][j]['location']['coordinate']['latitude']
                 rest_lng = result['businesses'][j]['location']['coordinate']['longitude']
-                if hasattr(result["businesses"][0], "distance"):
+                if "distance" in result["businesses"][0]:
                     if miles <= disResults:
                         distanceRest.append(miles)
                         nameRest.append(name)
@@ -150,7 +150,7 @@ class SearchHandler(webapp2.RequestHandler):
                 #miles = "Unknown"
                 if j >= (len(result["businesses"])-1):
                     break;
-                if hasattr(result["businesses"][0], "distance"):
+                if "distance" in result["businesses"][0]:
                     distance = int((result["businesses"][j]["distance"] * (.000621371192))*100)
                     miles= (1.0 *distance)/100
                 name = result["businesses"][j]["name"]
@@ -161,7 +161,7 @@ class SearchHandler(webapp2.RequestHandler):
                 # if miles <= disResults or miles is "Unknown":
                 #     if typeResults == result["businesses"][j]["categories"][0][0]:
                 #         distanceRest.append(miles)
-                if hasattr(result["businesses"][0], "distance"):
+                if "distance" in result["businesses"][0]:
                     if miles <= disResults:
                         if typeResults is result["businesses"][j]["categories"][0][0].lower():
                             distanceRest.append(miles)
