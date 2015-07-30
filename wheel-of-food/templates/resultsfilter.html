@@ -22,15 +22,14 @@
         });
       var lat = {{latRest|safe}}
       var lng = {{lngRest|safe}}
-      console.log(lat, lng);
-      // for (var i = 0, i < lat.length, i++) {
-      //   var marker = new google.maps.Marker({
-      //     position: new google.maps.LatLng(lat[i], lng[i]),
-      //     label: labels[i % labels.length],
-      //     map: map
-      //     title: 'Restaurant location'
-      //   });
-      // };
+      for (var i = 0; i < lat.length; i++) {
+        var marker = new google.maps.Marker({
+          position: new google.maps.LatLng(lat[i], lng[i]),
+          label: labels[i % labels.length],
+          map: map,
+          title: 'Restaurant location'
+        });
+      };
     }
     google.maps.event.addDomListener(window, 'load', initialize);
     </script>
@@ -52,6 +51,7 @@
     <div id="body">
       <body>
         <aside> <!--side bar-->
+          <h1>{{alert}}</h1>
           <h1>Filter Your Results</h1>
           <form action "/results" method="post" id="filtersform"> <!--form used to filter results-->
             <h2 name = "location" value ={{location}}>Current Location:{{location}}</h2>
