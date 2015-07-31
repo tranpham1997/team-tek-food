@@ -443,8 +443,20 @@ class ProfileHandler(webapp2.RequestHandler):
         template = env.get_template('profile.html')
         user = users.get_current_user()
         userEmail = user.email()
-        currentUser = User.query(User.userEmail == userEmail).fetch()
-        self.response.write(template.render())
+        currentUser = User.query(User.userEmail == userEmail).get()
+        foodTypePreference1 = currentUser.food_preference[0]
+        foodTypePreference2 = currentUser.food_preference[1]
+        foodTypePreference3 = currentUser.food_preference[2]
+        foodTypePreference4 = currentUser.food_preference[3]
+        foodTypePreference5 = currentUser.food_preference[4]
+        numResults = currentUser.numResults
+        template_variables = {'foodTypePreference1': foodTypePreference1,
+                              'foodTypePreference2': foodTypePreference2,
+                              'foodTypePreference3': foodTypePreference3,
+                              'foodTypePreference4': foodTypePreference4,
+                              'foodTypePreference5': foodTypePreference5,
+                              'numResults': numResults}
+        self.response.write(template.render(template_variables))
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
