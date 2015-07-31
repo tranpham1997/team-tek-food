@@ -19,7 +19,6 @@ body{
 a{
   text-decoration: none;
   color: white;
-  padding: 0px 10px;
   font-family: "Poiret One", arial, sans-serif;
 }
 footer{
@@ -47,6 +46,10 @@ ul{
     padding: 0 15%;
     color: #B20000;
     text-shadow: -1px 1px 1px #888888;
+}
+.footLinks{
+  color: white;
+  padding: 0px 10px;
 }
 #container {
    min-height: 100%;
@@ -93,4 +96,9 @@ ul{
 }
 #fork{
   padding-left: 10px;
+}
+#Edit{
+  color: #B20000;
+  margin-right: 12.5%;
+  font-size: 22px;
 }

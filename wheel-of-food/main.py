@@ -2,6 +2,7 @@
 import logging
 import jinja2
 import webapp2
+import time
 from google.appengine.api import urlfetch
 import json
 import yelp
@@ -319,6 +320,7 @@ class newProfileHandler(webapp2.RequestHandler):
         numResults = int(self.request.get('numResults'))
         newUser = User(userEmail=userEmail, food_preference=food_preference, numResults=numResults)
         newUser.put()
+        time.sleep(.5)
         return self.redirect('/')
 
 class ProfileHandler(webapp2.RequestHandler):
@@ -333,13 +335,47 @@ class ProfileHandler(webapp2.RequestHandler):
         foodTypePreference4 = currentUser.food_preference[3]
         foodTypePreference5 = currentUser.food_preference[4]
         numResults = currentUser.numResults
+        profile_key_urlsafe = currentUser.key.urlsafe()
         template_variables = {'foodTypePreference1': foodTypePreference1,
                               'foodTypePreference2': foodTypePreference2,
                               'foodTypePreference3': foodTypePreference3,
                               'foodTypePreference4': foodTypePreference4,
                               'foodTypePreference5': foodTypePreference5,
-                              'numResults': numResults}
+                              'numResults': numResults,
+                              'profile_key_urlsafe': profile_key_urlsafe}
         self.response.write(template.render(template_variables))
+
+class EditHandler(webapp2.RequestHandler):
+    def get(self):
+        template = env.get_template('editProf.html')
+        user = users.get_current_user()
+        if user:
+            logout_url = users.create_logout_url('/')
+            login_url = None
+            username = user.nickname()
+        else:
+            login_url = None
+            logout_url = None
+            username = None
+        template_variables = {'login_url': login_url, 'logout_url': logout_url, 'username': username}
+        self.response.write(template.render(template_variables))
+    def post(self):
+        user = users.get_current_user()
+        userEmail = user.email()
+        currentUser = User.query(User.userEmail == userEmail).get()
+        profile_key_urlsafe = currentUser.key.urlsafe()
+        foodTypePreference1 = self.request.get('foodTypePreference1')
+        foodTypePreference2 = self.request.get('foodTypePreference2')
+        foodTypePreference3 = self.request.get('foodTypePreference3')
+        foodTypePreference4 = self.request.get('foodTypePreference4')
+        foodTypePreference5 = self.request.get('foodTypePreference5')
+        food_preference = [foodTypePreference1, foodTypePreference2, foodTypePreference3, foodTypePreference4, foodTypePreference5]
+        numResults = int(self.request.get('numResults'))
+        currentUser.food_preference = food_preference
+        currentUser.numResults = numResults
+        currentUser.put()
+        time.sleep(.5)
+        return self.redirect('/profile?key=' + profile_key_urlsafe)
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
@@ -349,5 +385,6 @@ app = webapp2.WSGIApplication([
     ('/AboutUs', AboutUsHandler),
     ('/Sources', SourcesHandler),
     ('/newProfile', newProfileHandler),
-    ('/profile', ProfileHandler)
+    ('/profile', ProfileHandler),
+    ('/editProfile', EditHandler)
 ], debug=True)
