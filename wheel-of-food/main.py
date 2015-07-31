@@ -69,18 +69,18 @@ class SearchHandler(webapp2.RequestHandler):
         geocode = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + str(gmaps_address) + '&key=AIzaSyDIH9iVlHtpMY0BsBd3F3sn43Bmf4YV4mI'
         json_content = urlfetch.fetch(geocode).content
         results = json.loads(json_content)['results']
-
         # Logic/process info - do a search with Yelp API
         miles = ''
         result = yelp.search('restaurants', location, 0)
         numResults = self.request.get('number')
+        r = random.randint(0, len(result["businesses"]) - 1)
         if 'distance' not in result["businesses"][0]:
             self.redirect('/?error=true')
         else:
-            distance = int((result["businesses"][0]["distance"] * (.000621371192)) * 100)
+            distance = int((result["businesses"][r]["distance"] * (.000621371192)) * 100)
             miles = (1.0 *distance)/100
 
-        alert = result["businesses"][0]['image_url']
+        alert = result["businesses"][r]['image_url']
 
         # First random restaurant shown in second screen
         variables = {
@@ -89,15 +89,15 @@ class SearchHandler(webapp2.RequestHandler):
         'username': username,
         'location': location,
         'distance': miles,
-        'name': result["businesses"][0]["name"],
-        'address': result["businesses"][0]["location"]["display_address"],
-        'type': result["businesses"][0]["categories"][0][0],
+        'name': result["businesses"][r]["name"],
+        'address': result["businesses"][r]["location"]["display_address"],
+        'type': result["businesses"][r]["categories"][0][0],
         'lat': results[0]['geometry']['location']['lat'],
         'lng': results[0]['geometry']['location']['lng'],
-        'restImages': result["businesses"][0]['image_url'],
-        'yelp_url': result['businesses'][0]['url'],
-        'rest_lat': result['businesses'][0]['location']['coordinate']['latitude'],
-        'rest_lng': result['businesses'][0]['location']['coordinate']['longitude'],
+        'restImages': result["businesses"][r]['image_url'],
+        'yelp_url': result['businesses'][r]['url'],
+        'rest_lat': result['businesses'][r]['location']['coordinate']['latitude'],
+        'rest_lng': result['businesses'][r]['location']['coordinate']['longitude'],
         'alert': alert
         }
         template = env.get_template('results.html')
