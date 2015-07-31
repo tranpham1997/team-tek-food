@@ -50,9 +50,9 @@
     </div>
     <div id="body">
       <body background = "../static/Food-Pizza-Desktop-Background-Wallpaper-2880x1800.jpg">
-        <aside> <!--side bar-->
+        <aside id = "filtersForm"> <!--side bar-->
           <h1>Filter Your Results</h1>
-          <form action "/results" method="post" id="filtersform"> <!--form used to filter results-->
+          <form action "/results" method="post"> <!--form used to filter results-->
             <h2 value ={{location}} name = "location">Current Location: {{location}}</h2>
             <h2>Number of Restaurants Shown</h2>
             <select class = "dropMenu" type ="number" name="number" style ="width: 50px">
@@ -85,7 +85,6 @@
               <option value="Japanese">Japanese</option>
               <option value="Latin American">Latin American</option>
               <option value="Malaysian">Malaysian</option>
-              <option value="Mediterranean">Mediterranean</option>
               <option value="Mexican">Mexican</option>
               <option value="Middle Eastern">Middle Eastern</option>
               <option value="Portuguese">Portuguese</option>
