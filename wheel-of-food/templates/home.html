@@ -33,9 +33,14 @@
         </form>
         <p><h2 id="middle"> or </h2></p>
         <form action="/search" method="get" id="locationform"> <!--form to input location-->
-          <input id="locationbox" type="text" name="location" placeholder=" Enter City, State, or ZIP code"/>
+          <input id="locationbox" type="text" name="location" placeholder=" Enter full address"/>
           <input id="submitbutton" type="submit" value="Search!"/>
         </form>
+        <div id="error">
+        {% if error == "true" %}
+        <p>Please enter a full address.</p>
+        </div>
+        {% endif %}
       </body>
     </div>
     <div id="footer">

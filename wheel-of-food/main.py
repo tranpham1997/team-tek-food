@@ -28,6 +28,7 @@ class MainHandler(webapp2.RequestHandler):
     def get(self):
         # mapsClient = client.Client(key = 'AIzaSyDIH9iVlHtpMY0BsBd3F3sn43Bmf4YV4mI')
         # self.response.write(geocoding.reverse_geocode(mapsClient, (40.714224,-73.961452)))
+        error = self.request.get('error')
         user = users.get_current_user()
         #profileInfo = True
         if user is None:
@@ -48,10 +49,9 @@ class MainHandler(webapp2.RequestHandler):
                 profileInfo = True
                 logging.error(currentUser)
                 profile_key_urlsafe = currentUser[0].key.urlsafe()
-        template_variables = {'login_url': login_url, 'logout_url': logout_url, 'profileInfo': profileInfo, 'profile_key_urlsafe': profile_key_urlsafe}
+        template_variables = {'login_url': login_url, 'logout_url': logout_url, 'profileInfo': profileInfo, 'profile_key_urlsafe': profile_key_urlsafe, 'error': error}
         template = env.get_template('home.html')
         self.response.write(template.render(template_variables))
-
 
 class SearchHandler(webapp2.RequestHandler):
     def get(self):
@@ -71,13 +71,14 @@ class SearchHandler(webapp2.RequestHandler):
         results = json.loads(json_content)['results']
 
         # Logic/process info - do a search with Yelp API
+        miles = ''
         result = yelp.search('restaurants', location, 0)
         numResults = self.request.get('number')
-        if "distance" in result["businesses"][0]:
+        if 'distance' not in result["businesses"][0]:
+            self.redirect('/?error=true')
+        else:
             distance = int((result["businesses"][0]["distance"] * (.000621371192)) * 100)
             miles = (1.0 *distance)/100
-        else:
-            miles = 'Unknown'
 
         # First random restaurant shown in second screen
         variables = {
@@ -91,6 +92,7 @@ class SearchHandler(webapp2.RequestHandler):
         'type': result["businesses"][0]["categories"][0][0],
         'lat': results[0]['geometry']['location']['lat'],
         'lng': results[0]['geometry']['location']['lng'],
+        #'restImages': results["businesses"][0]['image_url'][0],
         'rest_lat': result['businesses'][0]['location']['coordinate']['latitude'],
         'rest_lng': result['businesses'][0]['location']['coordinate']['longitude'],
         }
@@ -115,100 +117,75 @@ class SearchHandler(webapp2.RequestHandler):
         typeRest =[]
         latRest = []
         lngRest = []
+        businIndex = []
         numResults = int(self.request.get('number'))
-        if "distance" in result["businesses"][0]:
-            disResults = int(self.request.get('distance'))
+        disResults = int(self.request.get('distance'))
         typeResults = self.request.get('restaurantType')
         i = 0
         j = 0
-        searchResults = ""
-        #alert = ""
+        resFound = ""
         if typeResults == "No Preference":
             while i != numResults:
-                if j >= (len(result["businesses"])-1):
-                    break;
-                if "distance" in result["businesses"][0]:
-                    distance = int((result["businesses"][j]["distance"] * (.000621371192))*100)
-                    miles= (1.0 *distance)/100
+                distance = int((result["businesses"][j]["distance"] * (.000621371192))*100)
+                miles= (1.0 *distance)/100
                 name = result["businesses"][j]["name"]
                 address = result["businesses"][j]["location"]["display_address"]
                 typeR = result["businesses"][j]["categories"][0][0]
                 rest_lat = result['businesses'][j]['location']['coordinate']['latitude']
                 rest_lng = result['businesses'][j]['location']['coordinate']['longitude']
-                if "distance" in result["businesses"][0]:
-                    if miles <= disResults:
+                if miles <= disResults:
+                    distanceRest.append(miles)
+                    nameRest.append(name)
+                    addressRest.append(address)
+                    typeRest.append(typeR)
+                    latRest.append(rest_lat)
+                    lngRest.append(rest_lng)
+                    businIndex.append(j)
+                    i = i + 1
+                j = j + 1
+                if j >= (len(result["businesses"])-1):
+                    break;
+        else:
+            # alert = "Hi"
+            typeResults = typeResults
+            while i != numResults:
+                distance = int((result["businesses"][j]["distance"] * (.000621371192))*100)
+                miles= (1.0 *distance)/100
+                name = result["businesses"][j]["name"]
+                address = result["businesses"][j]["location"]["display_address"]
+                typeR = result["businesses"][j]["categories"][0][0]
+                rest_lat = result['businesses'][j]['location']['coordinate']['latitude']
+                rest_lng = result['businesses'][j]['location']['coordinate']['longitude']
+                if miles <= disResults:
+                    if typeResults == result["businesses"][j]["categories"][0][0]:
                         distanceRest.append(miles)
                         nameRest.append(name)
                         addressRest.append(address)
                         typeRest.append(typeR)
                         latRest.append(rest_lat)
                         lngRest.append(rest_lng)
+                        businIndex.append(j)
                         i = i + 1
-                else:
-                    nameRest.append(name)
-                    addressRest.append(address)
-                    typeRest.append(typeR)
-                    latRest.append(rest_lat)
-                    lngRest.append(rest_lng)
-                    i = i + 1
                 j = j + 1
-        else:
-            #alert = "Hi"
-            typeResults = typeResults
+                if j >= (len(result["businesses"])-1):
+                    break;
+            j = 0
+            resFound = str(i) + " results found for " + typeResults + " food"
+            if i ==1:
+                resFound = str(i) + " result found for " + typeResults + " food"
             while i != numResults:
-                # checks if distance exists
-                #result["businesses"][j]["distance"]:
                 distance = int((result["businesses"][j]["distance"] * (.000621371192))*100)
                 miles= (1.0 *distance)/100
-                #miles = "Unknown"
-                if j >= (len(result["businesses"])-1):
-                    break;
-                if "distance" in result["businesses"][0]:
-                    distance = int((result["businesses"][j]["distance"] * (.000621371192))*100)
-                    miles= (1.0 *distance)/100
-                name = result["businesses"][j]["name"]
-                address = result["businesses"][j]["location"]["display_address"]
-                typeR = result["businesses"][j]["categories"][0][0]
-                rest_lat = result['businesses'][j]['location']['coordinate']['latitude']
-                rest_lng = result['businesses'][j]['location']['coordinate']['longitude']
-                # if miles <= disResults or miles is "Unknown":
-                #     if typeResults == result["businesses"][j]["categories"][0][0]:
-                #         distanceRest.append(miles)
-                if "distance" in result["businesses"][0]:
-                    if miles <= disResults:
-                        if typeResults is result["businesses"][j]["categories"][0][0].lower():
-                            distanceRest.append(miles)
-                            nameRest.append(name)
-                            addressRest.append(address)
-                            typeRest.append(typeR)
-                            latRest.append(rest_lat)
-                            lngRest.append(rest_lng)
-                            i = i + 1
-                else:
-                    if typeResults is result["businesses"][j]["categories"][0][0].lower():
-                        nameRest.append(name)
-                        addressRest.append(address)
-                        typeRest.append(typeR)
-                        latRest.append(rest_lat)
-                        lngRest.append(rest_lng)
-                        i = i + 1
-                j = j + 1
-                if j >= (len(result["businesses"])-1):
-                    break;
-            if i != numResults:
-                searchResults = str(i) + " results found for " + typeResults
-                while i  != numResults:
-                    # checks if distance exists
-                    #if result["businesses"][j]["distance"] is False:
-                    distance = int((result["businesses"][j]["distance"] * (.000621371192))*100)
-                    miles= (1.0 *distance)/100
-                    #else:
-                    #    miles = "Unknown"
-                    name = result["businesses"][i]["name"]
-                    address = result["businesses"][i]["location"]["display_address"]
-                    typeR = result["businesses"][i]["categories"][0][0]
-                    rest_lat = result['businesses'][i]['location']['coordinate']['latitude']
-                    rest_lng = result['businesses'][i]['location']['coordinate']['longitude']
+                if miles <= disResults:
+                    for check in businIndex:
+                        alert = "uphomes"
+                        if check == j:
+                            j = j + 1
+                    name = result["businesses"][j]["name"]
+                    address = result["businesses"][j]["location"]["display_address"]
+                    typeR = result["businesses"][j]["categories"][0][0]
+                    rest_lat = result['businesses'][j]['location']['coordinate']['latitude']
+                    rest_lng = result['businesses'][j]['location']['coordinate']['longitude']
                     distanceRest.append(miles)
                     nameRest.append(name)
                     addressRest.append(address)
@@ -216,6 +193,8 @@ class SearchHandler(webapp2.RequestHandler):
                     latRest.append(rest_lat)
                     lngRest.append(rest_lng)
                     i = i + 1
+                j = j + 1
+
         variables = {
             'lat': results[0]['geometry']['location']['lat'],
             'lng': results[0]['geometry']['location']['lng'],
@@ -229,11 +208,168 @@ class SearchHandler(webapp2.RequestHandler):
             'lngRest': lngRest,
             'location': location,
             'letter': letter,
-            #'alert': alert,
-            'searchResults':searchResults
+            'resFound': resFound
             }
         template = env.get_template('resultsfilter.html')
         self.response.write(template.render(variables))
+        # letter = ['A','B','C','D','E','F','G','H','I','J']
+        # location = self.request.get('location')
+        # gmaps_address = location.replace(' ', '+')
+        # geocode = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + str(gmaps_address) + '&key=AIzaSyDIH9iVlHtpMY0BsBd3F3sn43Bmf4YV4mI'
+        # json_content = urlfetch.fetch(geocode).content
+        # results = json.loads(json_content)['results']
+        # result = yelp.search('restaurants', location, 0)
+        # disResults = self.request.get('distance')
+        # businIndex = []
+        # distanceRest = []
+        # nameRest =[]
+        # addressRest = []
+        # typeRest =[]
+        # latRest = []
+        # lngRest = []
+        # numResults = int(self.request.get('number'))
+        # # if "distance" in result["businesses"][0]:
+        # #     disResults = int(self.request.get('distance'))
+        # typeResults = self.request.get('restaurantType')
+        # i = 0
+        # j = 0
+        # searchResults = ""
+        # #alert = ""
+        # if typeResults == "No Preference":
+        #     alert = "yo"
+        #     while i != numResults:
+        #         # if j >= (len(result["businesses"])-1):
+        #         #     break;
+        #         # Checks if miles exists
+        #         miles = 0
+        #         if "distance" in result["businesses"][0]:
+        #             distance = int((result["businesses"][j]["distance"] * (.000621371192))*100)
+        #             miles= (1.0 *distance)/100
+        #         else:
+        #             miles = "Unknown"
+        #         name = result["businesses"][j]["name"]
+        #         address = result["businesses"][j]["location"]["display_address"]
+        #         typeR = result["businesses"][j]["categories"][0][0]
+        #         rest_lat = result['businesses'][j]['location']['coordinate']['latitude']
+        #         rest_lng = result['businesses'][j]['location']['coordinate']['longitude']
+        #         if "distance" in result["businesses"][0]:
+        #             if miles <= disResults:
+        #                 distanceRest.append(miles)
+        #                 nameRest.append(name)
+        #                 addressRest.append(address)
+        #                 typeRest.append(typeR)
+        #                 latRest.append(rest_lat)
+        #                 lngRest.append(rest_lng)
+        #                 businIndex.append(j)
+        #                 i = i + 1
+        #         else:
+        #             distanceRest.append(miles)
+        #             nameRest.append(name)
+        #             addressRest.append(address)
+        #             typeRest.append(typeR)
+        #             latRest.append(rest_lat)
+        #             lngRest.append(rest_lng)
+        #             businIndex.append(j)
+        #             i = i + 1
+        #         j = j + 1
+        # else:
+        #     alert = "Hi"
+        #     typeResults = typeResults
+        #     while i != numResults:
+        #         # checks if distance exists
+        #         #result["businesses"][j]["distance"]:
+        #         # distance = int((result["businesses"][j]["distance"] * (.000621371192))*100)
+        #         # miles= (1.0 *distance)/100
+        #         #miles = "Unknown"
+        #         # if j >= (len(result["businesses"])-1):
+        #         #     break;
+        #         miles = 0
+        #         if "distance" in result["businesses"][j]:
+        #             alert = "sup"
+        #             distance = int((result["businesses"][j]["distance"] * (.000621371192))*100)
+        #             miles= (1.0 *distance)/100
+        #         else:
+        #             miles = "Unknown"
+        #         name = result["businesses"][j]["name"]
+        #         address = result["businesses"][j]["location"]["display_address"]
+        #         typeR = result["businesses"][j]["categories"][0][0]
+        #         rest_lat = result['businesses'][j]['location']['coordinate']['latitude']
+        #         rest_lng = result['businesses'][j]['location']['coordinate']['longitude']
+        #         # if miles <= disResults or miles is "Unknown":
+        #         alert = result["businesses"][j]["categories"][0][1]
+        #         if typeResults == result["businesses"][j]["categories"][0][0]:
+        #         #         distanceRest.append(miles)
+        #             alert = "I guess"
+        #             if "distance" in result["businesses"][j]:
+        #                 if miles <= disResults:
+        #                     if typeResults is result["businesses"][j]["categories"][0][0]:
+        #                         distanceRest.append(miles)
+        #                         nameRest.append(name)
+        #                         addressRest.append(address)
+        #                         typeRest.append(typeR)
+        #                         latRest.append(rest_lat)
+        #                         lngRest.append(rest_lng)
+        #                         businIndex.append(j)
+        #                         i = i + 1
+        #             else:
+        #                 distanceRest(miles)
+        #                 nameRest.append(name)
+        #                 addressRest.append(address)
+        #                 typeRest.append(typeR)
+        #                 latRest.append(rest_lat)
+        #                 lngRest.append(rest_lng)
+        #                 businIndex.append(j)
+        #                 i = i + 1
+        #         j = j + 1
+        #         if j >= (len(result["businesses"])-1):
+        #             break;
+        # j = 0
+        # if i != numResults:
+        #     searchResults = str(i) + " results found for " + typeResults
+        #     while i  != numResults:
+        #         # checks if distance exists
+        #         #if result["businesses"][j]["distance"] is False:
+        #         miles = 0
+        #         for check in businIndex:
+        #             if check == j:
+        #                 j = j + 1
+        #         if "distance" in result["businesses"][j]:
+        #             distance = int((result["businesses"][j]["distance"] * (.000621371192))*100)
+        #             miles= (1.0 *distance)/100
+        #         else:
+        #             miles = "Unknown"
+        #         #else:
+        #         #    miles = "Unknown"
+        #         name = result["businesses"][j]["name"]
+        #         address = result["businesses"][j]["location"]["display_address"]
+        #         typeR = result["businesses"][j]["categories"][0][0]
+        #         rest_lat = result['businesses'][j]['location']['coordinate']['latitude']
+        #         rest_lng = result['businesses'][j]['location']['coordinate']['longitude']
+        #         distanceRest.append(miles)
+        #         nameRest.append(name)
+        #         addressRest.append(address)
+        #         typeRest.append(typeR)
+        #         latRest.append(rest_lat)
+        #         lngRest.append(rest_lng)
+        #         i = i + 1
+        # variables = {
+        #     'lat': results[0]['geometry']['location']['lat'],
+        #     'lng': results[0]['geometry']['location']['lng'],
+        #     'latRest': latRest,
+        #     'lngRest': lngRest,
+        #     'distanceRest': distanceRest,
+        #     'nameRest': nameRest,
+        #     'addressRest': addressRest,
+        #     'typeRest': typeRest,
+        #     'latRest': latRest,
+        #     'lngRest': lngRest,
+        #     'location': location,
+        #     'letter': letter,
+        #     'alert': alert,
+        #     'searchResults':searchResults
+        #     }
+        # template = env.get_template('resultsfilter.html')
+        # self.response.write(template.render(variables))
 
 class LatLongHandler(webapp2.RequestHandler):
     def get(self):
@@ -289,6 +425,7 @@ class newProfileHandler(webapp2.RequestHandler):
     def post(self):
         user = users.get_current_user()
         userEmail = user.email()
+        username = self.request.get('username')
         foodTypePreference1 = self.request.get('foodTypePreference1')
         foodTypePreference2 = self.request.get('foodTypePreference2')
         foodTypePreference3 = self.request.get('foodTypePreference3')

@@ -149,3 +149,7 @@ footer{
   padding-top: 10px;
   color: #FFF0DD;
 }
+#error{
+  text-align: center;
+  color: red;
+}

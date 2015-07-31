@@ -51,7 +51,6 @@
     <div id="body">
       <body>
         <aside> <!--side bar-->
-          <!--<h1>{{alert}}<h1>-->
           <h1>Filter Your Results</h1>
           <form action "/results" method="post" id="filtersform"> <!--form used to filter results-->
             <h2 value ={{location}} name = "location">Current Location: {{location}}</h2>
@@ -103,7 +102,6 @@
               <option value="expensive">$$$</option>
               <option value="veryExpensive">$$$$</option>
             </select><br>-->
-            {% if distance != 'Unknown' %}
               <h2>Distance</h2>
               <select class="dropMenu" name="distance" type = "number" style ="width: 110px">
                 <option value="2">0-2 miles</option>
@@ -111,7 +109,6 @@
                 <option value="10">6-10 miles</option>
                 <option value="20">11-20 miles<option>
               </select>
-            {% endif %}
               <br><br>
             <div name ="location" value= {{location}}></div>
             <input id="submitbutton" type="submit" value="Submit">
@@ -122,10 +119,9 @@
         <div id ="map-canvas"></div>
         <div>
         <h5 class="restInfo"><b>Address:</b>  {{address[0]}}, {{address[1]}}, {{address[2]}}</h5>
-        {% if distance != 'Unknown' %}
           <h5 class="restInfo"><b>Distance:</b> {{distance}} miles</h5>
-        {% endif %}
         <h5 class="restInfo"><b>Type:</b> {{type}}</h5>
+        <img src={{restImages}} alt="Mountain View" style="width:304px;height:228px;">
         </div>
       </article>
       </body>
