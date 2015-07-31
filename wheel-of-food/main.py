@@ -95,6 +95,7 @@ class SearchHandler(webapp2.RequestHandler):
         'lat': results[0]['geometry']['location']['lat'],
         'lng': results[0]['geometry']['location']['lng'],
         'restImages': result["businesses"][0]['image_url'],
+        'yelp_url': result['businesses'][0]['url'],
         'rest_lat': result['businesses'][0]['location']['coordinate']['latitude'],
         'rest_lng': result['businesses'][0]['location']['coordinate']['longitude'],
         'alert': alert
@@ -120,6 +121,7 @@ class SearchHandler(webapp2.RequestHandler):
         typeRest =[]
         latRest = []
         lngRest = []
+        urlRest = []
         businIndex = []
         numResults = int(self.request.get('number'))
         disResults = int(self.request.get('distance'))
@@ -136,6 +138,7 @@ class SearchHandler(webapp2.RequestHandler):
                 typeR = result["businesses"][j]["categories"][0][0]
                 rest_lat = result['businesses'][j]['location']['coordinate']['latitude']
                 rest_lng = result['businesses'][j]['location']['coordinate']['longitude']
+                rest_yelp_url = result['businesses'][j]['url']
                 if miles <= disResults:
                     distanceRest.append(miles)
                     nameRest.append(name)
@@ -143,6 +146,7 @@ class SearchHandler(webapp2.RequestHandler):
                     typeRest.append(typeR)
                     latRest.append(rest_lat)
                     lngRest.append(rest_lng)
+                    urlRest.append(rest_yelp_url)
                     businIndex.append(j)
                     i = i + 1
                 j = j + 1
@@ -159,6 +163,7 @@ class SearchHandler(webapp2.RequestHandler):
                 typeR = result["businesses"][j]["categories"][0][0]
                 rest_lat = result['businesses'][j]['location']['coordinate']['latitude']
                 rest_lng = result['businesses'][j]['location']['coordinate']['longitude']
+                rest_yelp_url = result['businesses'][j]['url']
                 if miles <= disResults:
                     if typeResults == result["businesses"][j]["categories"][0][0]:
                         distanceRest.append(miles)
@@ -167,6 +172,7 @@ class SearchHandler(webapp2.RequestHandler):
                         typeRest.append(typeR)
                         latRest.append(rest_lat)
                         lngRest.append(rest_lng)
+                        urlRest.append(rest_yelp_url)
                         businIndex.append(j)
                         i = i + 1
                 j = j + 1
@@ -189,12 +195,14 @@ class SearchHandler(webapp2.RequestHandler):
                     typeR = result["businesses"][j]["categories"][0][0]
                     rest_lat = result['businesses'][j]['location']['coordinate']['latitude']
                     rest_lng = result['businesses'][j]['location']['coordinate']['longitude']
+                    rest_yelp_url = result['businesses'][j]['url']
                     distanceRest.append(miles)
                     nameRest.append(name)
                     addressRest.append(address)
                     typeRest.append(typeR)
                     latRest.append(rest_lat)
                     lngRest.append(rest_lng)
+                    urlRest.append(rest_yelp_url)
                     i = i + 1
                 j = j + 1
 
@@ -238,6 +246,7 @@ class SearchHandler(webapp2.RequestHandler):
             'typeRest': typeRest,
             'latRest': latRest,
             'lngRest': lngRest,
+            'urlRest': urlRest,
             'location': location,
             'letter': letter,
             'resFound': resFound,

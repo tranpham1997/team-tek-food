@@ -135,10 +135,9 @@
           <div class ="restResult">
           <h3 id = "restaurantName">{{letter[i]}}. {{nameRest[i]}}</h3>
           <h5 id ="restInfo">Address: {{addressRest[i][0]}}, {{addressRest[i][1]}}, {{addressRest[i][2]}}</h5>
-          {% if distanceRest %}
-            <h5 id = "restInfo">Distance: {{distanceRest[i]}} miles</h5>
-          {% endif %}
+          <h5 id = "restInfo">Distance: {{distanceRest[i]}} miles</h5>
           <h5 id = "restInfo">Type: {{typeRest[i]}}</h5>
+          <h5><a href={{urlRest[i]}}>View on Yelp</a></h5>
       </div>
         {% endfor %}
     </section>
