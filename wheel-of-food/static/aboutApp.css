@@ -30,7 +30,7 @@ footer{
 h1{
   font-family: Verdana, arial, sans-serif;
   font-size: 40px;
-  padding: 0 12.5%;
+  text-align: center;
   color: #C20000;
   text-shadow: -1px 1px 1px #888888;
 }
