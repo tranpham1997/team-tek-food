@@ -474,9 +474,8 @@ class newProfileHandler(webapp2.RequestHandler):
         foodTypePreference4 = self.request.get('foodTypePreference4')
         foodTypePreference5 = self.request.get('foodTypePreference5')
         food_preference = [foodTypePreference1, foodTypePreference2, foodTypePreference3, foodTypePreference4, foodTypePreference5]
-        usePreferences = bool(self.request.get('usePreferences'))
         numResults = int(self.request.get('numResults'))
-        newUser = User(userEmail=userEmail, food_preference=food_preference, usePreferences=usePreferences, numResults=numResults)
+        newUser = User(userEmail=userEmail, food_preference=food_preference, numResults=numResults)
         newUser.put()
         return self.redirect('/')
 
