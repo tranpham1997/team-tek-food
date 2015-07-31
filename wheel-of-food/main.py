@@ -30,42 +30,40 @@ class MainHandler(webapp2.RequestHandler):
         # self.response.write(geocoding.reverse_geocode(mapsClient, (40.714224,-73.961452)))
         error = self.request.get('error')
         user = users.get_current_user()
-        #profileInfo = True
-        #Check 3
-        # if user is None:
-        #     login_url = users.create_login_url('/')
-        #     logout_url = None
-        #     profileInfo = False
-        #     profile_key_urlsafe = None
-        # else:
-        #     logout_url = users.create_logout_url('/')
-        #     login_url = None
-        #     userEmail = user.email()
-        #     userID = user.user_id()
-        #     currentUser = User.query(User.userEmail == userEmail).fetch()
-        #     if currentUser == []:
-        #         profileInfo = False
-        #         profile_key_urlsafe = None
-        #     else:
-        #         profileInfo = True
-        #         logging.error(currentUser)
-        #         profile_key_urlsafe = currentUser[0].key.urlsafe()
-        #template_variables = {'login_url': login_url, 'logout_url': logout_url, 'profileInfo': profileInfo, 'profile_key_urlsafe': profile_key_urlsafe, 'error': error}
+        profileInfo = True
+        if user is None:
+            login_url = users.create_login_url('/')
+            logout_url = None
+            profileInfo = False
+            profile_key_urlsafe = None
+        else:
+            logout_url = users.create_logout_url('/')
+            login_url = None
+            userEmail = user.email()
+            userID = user.user_id()
+            currentUser = User.query(User.userEmail == userEmail).fetch()
+            if currentUser == []:
+                profileInfo = False
+                profile_key_urlsafe = None
+            else:
+                profileInfo = True
+                logging.error(currentUser)
+                profile_key_urlsafe = currentUser[0].key.urlsafe()
+        template_variables = {'login_url': login_url, 'logout_url': logout_url, 'profileInfo': profileInfo, 'profile_key_urlsafe': profile_key_urlsafe, 'error': error}
         template = env.get_template('home.html')
-        self.response.write(template.render()) #missing templatevariables
+        self.response.write(template.render(template_variables))
 
 class SearchHandler(webapp2.RequestHandler):
     def get(self):
-        #Check 1
-        # user = users.get_current_user()
-        # if user:
-        #     logout_url = users.create_logout_url('/')
-        #     login_url = None
-        #     username = user.nickname()
-        # else:
-        #     login_url = None
-        #     logout_url = None
-        #     username = None
+        user = users.get_current_user()
+        if user:
+            logout_url = users.create_logout_url('/')
+            login_url = None
+            username = user.nickname()
+        else:
+            login_url = None
+            logout_url = None
+            username = None
         location = self.request.get('location')
         gmaps_address = location.replace(' ', '+')
         geocode = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + str(gmaps_address) + '&key=AIzaSyDIH9iVlHtpMY0BsBd3F3sn43Bmf4YV4mI'
@@ -86,9 +84,9 @@ class SearchHandler(webapp2.RequestHandler):
 
         # First random restaurant shown in second screen
         variables = {
-        # 'login_url': login_url,
-        # 'logout_url': logout_url,
-        # 'username': username,
+        'login_url': login_url,
+        'logout_url': logout_url,
+        'username': username,
         'location': location,
         'distance': miles,
         'name': result["businesses"][0]["name"],
@@ -350,6 +348,6 @@ app = webapp2.WSGIApplication([
     ('/AboutApp', AboutAppHandler),
     ('/AboutUs', AboutUsHandler),
     ('/Sources', SourcesHandler),
-    # ('/newProfile', newProfileHandler),
-    # ('/profile', ProfileHandler)
+    ('/newProfile', newProfileHandler),
+    ('/profile', ProfileHandler)
 ], debug=True)
