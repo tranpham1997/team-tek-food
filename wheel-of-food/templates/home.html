@@ -11,7 +11,12 @@
       {% if login_url %}
       <a id="inbutton" href="{{login_url}}">login</a>
       {% else %}
-      <a id="profileLink" href="/profile">profile</a><a id="outbutton" href="{{logout_url}}">logout</a>
+      <a id="outbutton" href="{{logout_url}}">logout</a>
+        {% if profileInfo == False %}
+          <a id="profileLink" href="/newProfile">create your profile</a>
+        {% elif profileInfo == True %}
+          <a id="profileLink" href="/profile?key={{profile_key_urlsafe}}">profile</a>
+        {% endif %}
       {% endif %}
       <header>
         <div id="headSection">

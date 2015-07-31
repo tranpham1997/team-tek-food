@@ -27,33 +27,12 @@ footer{
   padding-bottom: 10px;
   vertical-align: baseline;
 }
-div.bios{
-  width: 75%;
-  height: 400px;
-  background-color: #FFF0DD;
-  box-shadow: -3px 3px 3px #888888;
-  margin: 14px 12.5%;
-}
 h1{
   font-family: Verdana, arial, sans-serif;
   font-size: 40px;
   padding: 0 12.5%;
   color: #C20000;
   text-shadow: -1px 1px 1px #888888;
-}
-h2{
-  font-family: "Poiret One", arial, sans-serif;
-  font-size: 40px;
-  color: #B20000;
-  padding: 10px;
-  text-shadow: -1px 1px 1px #C20000;
-}
-p{
-  font-family: "Poiret One", arial, sans-serif;
-  font-size: 30px;
-  color: #B20000;
-  padding: 15px;
-  text-shadow: -1px 1px 1px #C20000;
 }
 #container {
    min-height: 100%;
@@ -65,7 +44,7 @@ p{
    background-color: #C20000;
 }
 #body {
-   padding: 0px;
+   padding: 10px;
    padding-bottom: 70px;   /* Height of the footer */
 }
 #footer {

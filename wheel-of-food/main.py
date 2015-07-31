@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+import logging
 import jinja2
 import webapp2
 from google.appengine.api import urlfetch
@@ -29,13 +29,26 @@ class MainHandler(webapp2.RequestHandler):
         # mapsClient = client.Client(key = 'AIzaSyDIH9iVlHtpMY0BsBd3F3sn43Bmf4YV4mI')
         # self.response.write(geocoding.reverse_geocode(mapsClient, (40.714224,-73.961452)))
         user = users.get_current_user()
+        #profileInfo = True
         if user is None:
             login_url = users.create_login_url('/')
             logout_url = None
+            profileInfo = False
+            profile_key_urlsafe = None
         else:
             logout_url = users.create_logout_url('/')
             login_url = None
-        template_variables = {'login_url': login_url, 'logout_url': logout_url}
+            userEmail = user.email()
+            userID = user.user_id()
+            currentUser = User.query(User.userEmail == userEmail).fetch()
+            if currentUser == []:
+                profileInfo = False
+                profile_key_urlsafe = None
+            else:
+                profileInfo = True
+                logging.error(currentUser)
+                profile_key_urlsafe = currentUser[0].key.urlsafe()
+        template_variables = {'login_url': login_url, 'logout_url': logout_url, 'profileInfo': profileInfo, 'profile_key_urlsafe': profile_key_urlsafe}
         template = env.get_template('home.html')
         self.response.write(template.render(template_variables))
 
@@ -254,13 +267,14 @@ class FilterHandler(webapp2.RequestHandler):
         numResults = self.request.get('number')
 
 class User(ndb.Model):
-    food_preference = []
+    userEmail = ndb.StringProperty()
+    food_preference = ndb.StringProperty(repeated = True)
     usePreferences = ndb.BooleanProperty()
     numResults = ndb.IntegerProperty()
 
-class ProfileHandler(webapp2.RequestHandler):
+class newProfileHandler(webapp2.RequestHandler):
     def get(self):
-        template = env.get_template('profile.html')
+        template = env.get_template('newProfile.html')
         user = users.get_current_user()
         if user:
             logout_url = users.create_logout_url('/')
@@ -273,16 +287,27 @@ class ProfileHandler(webapp2.RequestHandler):
         template_variables = {'login_url': login_url, 'logout_url': logout_url, 'username': username}
         self.response.write(template.render(template_variables))
     def post(self):
+        user = users.get_current_user()
+        userEmail = user.email()
         foodTypePreference1 = self.request.get('foodTypePreference1')
         foodTypePreference2 = self.request.get('foodTypePreference2')
         foodTypePreference3 = self.request.get('foodTypePreference3')
         foodTypePreference4 = self.request.get('foodTypePreference4')
         foodTypePreference5 = self.request.get('foodTypePreference5')
-        food_preference = User.food_preference.append(foodTypePreference1, foodTypePreference2, foodTypePreference3, foodTypePreference4, foodTypePreference5)
+        food_preference = [foodTypePreference1, foodTypePreference2, foodTypePreference3, foodTypePreference4, foodTypePreference5]
         usePreferences = bool(self.request.get('usePreferences'))
-        numResults = self.request.get('numResults')
-        newUser = User(food_preference=food_preference, usePreferences=usePreferences, numResults=numResults)
+        numResults = int(self.request.get('numResults'))
+        newUser = User(userEmail=userEmail, food_preference=food_preference, usePreferences=usePreferences, numResults=numResults)
         newUser.put()
+        return self.redirect('/')
+
+class ProfileHandler(webapp2.RequestHandler):
+    def get(self):
+        template = env.get_template('profile.html')
+        user = users.get_current_user()
+        userEmail = user.email()
+        currentUser = User.query(User.userEmail == userEmail).fetch()
+        self.response.write(template.render())
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
@@ -291,5 +316,6 @@ app = webapp2.WSGIApplication([
     ('/AboutApp', AboutAppHandler),
     ('/AboutUs', AboutUsHandler),
     ('/Sources', SourcesHandler),
-    ('/profile', ProfileHandler),
+    ('/newProfile', newProfileHandler),
+    ('/profile', ProfileHandler)
 ], debug=True)
