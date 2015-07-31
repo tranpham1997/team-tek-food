@@ -64,7 +64,7 @@ class SearchHandler(webapp2.RequestHandler):
         if user:
             logout_url = users.create_logout_url('/')
             login_url = None
-            username = user.nickname()
+            username = user.email()
         else:  # user is not logged in
             login_url = None
             logout_url = None
