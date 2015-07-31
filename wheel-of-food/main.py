@@ -18,11 +18,12 @@ class UserPreferences(ndb.Model):
     distance = ndb.FloatProperty()
     date = ndb.DateProperty()
 
-# Saving users in datastore
-class User(ndb.Model):
-    name = ndb.StringProperty()
-    userId = ndb.StringProperty()
 
+class User(ndb.Model):
+    userEmail = ndb.StringProperty()
+    food_preference = ndb.StringProperty(repeated = True)
+    usePreferences = ndb.BooleanProperty()
+    numResults = ndb.IntegerProperty()
 # Initial page for website, offers login information
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -36,6 +37,7 @@ class MainHandler(webapp2.RequestHandler):
             logout_url = None
             profileInfo = False
             profile_key_urlsafe = None
+
         else:
             logout_url = users.create_logout_url('/')
             login_url = None
@@ -55,12 +57,14 @@ class MainHandler(webapp2.RequestHandler):
 
 class SearchHandler(webapp2.RequestHandler):
     def get(self):
+        currentUser = None
         user = users.get_current_user()
+        profileInfo = True
         if user:
             logout_url = users.create_logout_url('/')
             login_url = None
             username = user.nickname()
-        else:
+        else:  # user is not logged in
             login_url = None
             logout_url = None
             username = None
@@ -81,6 +85,36 @@ class SearchHandler(webapp2.RequestHandler):
             miles = (1.0 *distance)/100
 
         alert = result["businesses"][0]['image_url']
+        name = result["businesses"][0]["name"]
+        address= result["businesses"][0]["location"]["display_address"]
+        typeRest =result["businesses"][0]["categories"][0][0]
+        lat =results[0]['geometry']['location']['lat']
+        lng= results[0]['geometry']['location']['lng']
+        restImages =result["businesses"][0]['image_url']
+        yelp_url = result['businesses'][0]['url']
+        rest_lat = result['businesses'][0]['location']['coordinate']['latitude']
+        rest_lng =  result['businesses'][0]['location']['coordinate']['longitude']
+        food_preference =[]
+        if user:
+            if profileInfo == True:
+                currentUser = User.query(User.userEmail == user.email()).get()
+                # foodTypePreference1 = self.request.get('')
+                # foodTypePreference2 = self.request.get('foodTypePreference2')
+                # foodTypePreference3 = self.request.get('foodTypePreference3')
+                # foodTypePreference4 = self.request.get('foodTypePreference4')
+                # foodTypePreference5 = self.request.get('foodTypePreference5')
+                # food_preference = [foodTypePreference1, foodTypePreference2, foodTypePreference3, foodTypePreference4, foodTypePreference5]
+                food_preference = currentUser.food_preference
+                for foodType in food_preference:
+                    for i in range(0, len(result["businesses"])-1):
+                        if result["businesses"][i]["categories"][0][0] == foodType:
+                            name = result["businesses"][i]["name"]
+                            address= result["businesses"][i]["location"]["display_address"]
+                            typeRest =result["businesses"][i]["categories"][0][0]
+                            restImages =result["businesses"][i]['image_url']
+                            yelp_url = result['businesses'][i]['url']
+                            rest_lat = result['businesses'][i]['location']['coordinate']['latitude']
+                            rest_lng= result['businesses'][i]['location']['coordinate']['longitude']
 
         # First random restaurant shown in second screen
         variables = {
@@ -89,16 +123,17 @@ class SearchHandler(webapp2.RequestHandler):
         'username': username,
         'location': location,
         'distance': miles,
-        'name': result["businesses"][0]["name"],
-        'address': result["businesses"][0]["location"]["display_address"],
-        'type': result["businesses"][0]["categories"][0][0],
-        'lat': results[0]['geometry']['location']['lat'],
-        'lng': results[0]['geometry']['location']['lng'],
-        'restImages': result["businesses"][0]['image_url'],
-        'yelp_url': result['businesses'][0]['url'],
-        'rest_lat': result['businesses'][0]['location']['coordinate']['latitude'],
-        'rest_lng': result['businesses'][0]['location']['coordinate']['longitude'],
-        'alert': alert
+        'name': name,
+        'address': address,
+        'type': typeRest,
+        'lat': lat,
+        'lng': lng,
+        'restImages': restImages,
+        'yelp_url': yelp_url,
+        'rest_lat': rest_lat,
+        'rest_lng': rest_lng,
+        'alert': alert,
+        'food_preference': food_preference
         }
         template = env.get_template('results.html')
         # Print result in proper JSON - debugging purposes
@@ -286,11 +321,6 @@ class FilterHandler(webapp2.RequestHandler):
     def get(self):
         numResults = self.request.get('number')
 
-class User(ndb.Model):
-    userEmail = ndb.StringProperty()
-    food_preference = ndb.StringProperty(repeated = True)
-    usePreferences = ndb.BooleanProperty()
-    numResults = ndb.IntegerProperty()
 
 class newProfileHandler(webapp2.RequestHandler):
     def get(self):
