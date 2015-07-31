@@ -106,6 +106,14 @@ article{
   border-color: #F0F0F0;
   background-color: white;
 }
+/*.restResult{
+
+  margin-right: 300px;
+}*/
+
+#viewYelp: hover{
+  
+}
 #typeMenu option{
   width: 150px;
   height: 20px;
@@ -211,3 +219,12 @@ article{
   padding-top: 10px;
   color: #FFF0DD;
 }
+#backgroundStyle{
+  margin: 0;
+  padding: 0;
+  height:100%;
+  width: 100%;
+  background-size: cover;
+  background-position: left;
+}
+html{ overflow-y: scroll; }
