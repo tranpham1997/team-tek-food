@@ -80,6 +80,8 @@ class SearchHandler(webapp2.RequestHandler):
             distance = int((result["businesses"][0]["distance"] * (.000621371192)) * 100)
             miles = (1.0 *distance)/100
 
+        alert = result["businesses"][0]['image_url']
+
         # First random restaurant shown in second screen
         variables = {
         'login_url': login_url,
@@ -92,9 +94,10 @@ class SearchHandler(webapp2.RequestHandler):
         'type': result["businesses"][0]["categories"][0][0],
         'lat': results[0]['geometry']['location']['lat'],
         'lng': results[0]['geometry']['location']['lng'],
-        #'restImages': results["businesses"][0]['image_url'][0],
+        'restImages': result["businesses"][0]['image_url'],
         'rest_lat': result['businesses'][0]['location']['coordinate']['latitude'],
         'rest_lng': result['businesses'][0]['location']['coordinate']['longitude'],
+        'alert': alert
         }
         template = env.get_template('results.html')
         # Print result in proper JSON - debugging purposes
@@ -195,6 +198,35 @@ class SearchHandler(webapp2.RequestHandler):
                     i = i + 1
                 j = j + 1
 
+                #Change Background according to type of food
+        backgroundImg = ""
+        backImg ={
+            'American':"carls-jr-most-american-burger",
+            'Arabian':"grilled-kangaroo.jpg",
+            'Australian':"grilled-kangaroo.jpg",
+            'Brazilian':"Traditional-Brazilian-Food.jpg",
+            'Caribbean':"ropa-vieja.jpg",
+            'Chinese':"295198-chinese-food.jpg",
+            'Filipino':"photo-4.jpg",
+            'French': "4e7fe1ec14f092326f000153-1317003759.jpeg",
+            'German': "pastacabbage-germanfood-germanrecipes",
+            'Greek':"Greek-Lentil-Salad-recipe-with-Feta-cheese-.jpg",
+            'Indian':"ethnic.jpg",
+            'Indonesian':"indo-salad.jpg",
+            'Japanese':"5.jpg",
+            'Latin American':"",
+            'Malaysian':"img_2800.jpg",
+            'Meditterranean': "Tarbouch_slider_1.jpg",
+            'Mexican': "dsc_0491.jpg",
+            'Middle Eastern':"sahara_falafel_plate",
+            'Portuguese':"octopus.jpeg",
+            'Thai':"Thai-food1.jpg",
+            'Turkish':"photo-9.jpg",
+            'Vegan': "vegan-dietyou.jpg",
+            'Vegetarian':"muscle-building-food1.jpg",
+            'Vietnamese': "img_5935.jpg"
+        }
+        backgroundImg = "../static/"+ backImg[typeResults]
         variables = {
             'lat': results[0]['geometry']['location']['lat'],
             'lng': results[0]['geometry']['location']['lng'],
@@ -208,7 +240,8 @@ class SearchHandler(webapp2.RequestHandler):
             'lngRest': lngRest,
             'location': location,
             'letter': letter,
-            'resFound': resFound
+            'resFound': resFound,
+            'backgroundImg': backgroundImg
             }
         template = env.get_template('resultsfilter.html')
         self.response.write(template.render(variables))
